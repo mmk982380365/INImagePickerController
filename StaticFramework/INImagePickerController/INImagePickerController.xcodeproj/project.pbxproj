@@ -6,6 +6,22 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		CB1331E71D7EBEA500B99F04 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = CB1331E81D7EBEA500B99F04 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				CB1331EB1D7EBEA800B99F04 /* MultiPlatform Build */,
+			);
+			dependencies = (
+				CB1332021D7EC10200B99F04 /* PBXTargetDependency */,
+				CB1331ED1D7EBEAD00B99F04 /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		CB1331671D7EBCF700B99F04 /* INImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331461D7EBCF700B99F04 /* INImageDetailViewController.m */; };
 		CB1331681D7EBCF700B99F04 /* INImageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331481D7EBCF700B99F04 /* INImageListViewController.m */; };
@@ -30,7 +46,36 @@
 		CB13317E1D7EBD3900B99F04 /* INAlbumSelectCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331611D7EBCF700B99F04 /* INAlbumSelectCell.h */; };
 		CB13317F1D7EBD3900B99F04 /* INAlbumSelectTitle.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331631D7EBCF700B99F04 /* INAlbumSelectTitle.h */; };
 		CB1331801D7EBD3900B99F04 /* INImageDetailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331651D7EBCF700B99F04 /* INImageDetailCell.h */; };
+		CB1332371D7EC36D00B99F04 /* picker_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB13322F1D7EC36D00B99F04 /* picker_down@2x.png */; };
+		CB1332381D7EC36D00B99F04 /* picker_down@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332301D7EC36D00B99F04 /* picker_down@3x.png */; };
+		CB1332391D7EC36D00B99F04 /* picker_mask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332311D7EC36D00B99F04 /* picker_mask@2x.png */; };
+		CB13323A1D7EC36D00B99F04 /* picker_mask@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332321D7EC36D00B99F04 /* picker_mask@3x.png */; };
+		CB13323B1D7EC36D00B99F04 /* picker_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332331D7EC36D00B99F04 /* picker_selected@2x.png */; };
+		CB13323C1D7EC36D00B99F04 /* picker_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332341D7EC36D00B99F04 /* picker_selected@3x.png */; };
+		CB13323D1D7EC36D00B99F04 /* picker_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332351D7EC36D00B99F04 /* picker_unselected@2x.png */; };
+		CB13323E1D7EC36D00B99F04 /* picker_unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332361D7EC36D00B99F04 /* picker_unselected@3x.png */; };
+		CB7874881DAB9A9D00C15411 /* INImageEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CB7874861DAB9A9D00C15411 /* INImageEditViewController.h */; };
+		CB7874891DAB9A9D00C15411 /* INImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7874871DAB9A9D00C15411 /* INImageEditViewController.m */; };
+		CB7874911DABA51C00C15411 /* INImageBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78748F1DABA51C00C15411 /* INImageBorderView.h */; };
+		CB7874921DABA51C00C15411 /* INImageBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7874901DABA51C00C15411 /* INImageBorderView.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CB1331EC1D7EBEAD00B99F04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB13312E1D7EBCD000B99F04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB1331351D7EBCD000B99F04;
+			remoteInfo = INImagePickerController;
+		};
+		CB1332011D7EC10200B99F04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB13312E1D7EBCD000B99F04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB1331FA1D7EC0C800B99F04;
+			remoteInfo = INImagePickerControllerBundle;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		CB1331341D7EBCD000B99F04 /* CopyFiles */ = {
@@ -69,6 +114,20 @@
 		CB1331651D7EBCF700B99F04 /* INImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageDetailCell.h; sourceTree = "<group>"; };
 		CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageDetailCell.m; sourceTree = "<group>"; };
 		CB1331721D7EBD1000B99F04 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		CB1331FB1D7EC0C800B99F04 /* INImagePickerController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INImagePickerController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1331FD1D7EC0C800B99F04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB13322F1D7EC36D00B99F04 /* picker_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_down@2x.png"; sourceTree = "<group>"; };
+		CB1332301D7EC36D00B99F04 /* picker_down@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_down@3x.png"; sourceTree = "<group>"; };
+		CB1332311D7EC36D00B99F04 /* picker_mask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_mask@2x.png"; sourceTree = "<group>"; };
+		CB1332321D7EC36D00B99F04 /* picker_mask@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_mask@3x.png"; sourceTree = "<group>"; };
+		CB1332331D7EC36D00B99F04 /* picker_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_selected@2x.png"; sourceTree = "<group>"; };
+		CB1332341D7EC36D00B99F04 /* picker_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_selected@3x.png"; sourceTree = "<group>"; };
+		CB1332351D7EC36D00B99F04 /* picker_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_unselected@2x.png"; sourceTree = "<group>"; };
+		CB1332361D7EC36D00B99F04 /* picker_unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_unselected@3x.png"; sourceTree = "<group>"; };
+		CB7874861DAB9A9D00C15411 /* INImageEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageEditViewController.h; sourceTree = "<group>"; };
+		CB7874871DAB9A9D00C15411 /* INImageEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageEditViewController.m; sourceTree = "<group>"; };
+		CB78748F1DABA51C00C15411 /* INImageBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageBorderView.h; sourceTree = "<group>"; };
+		CB7874901DABA51C00C15411 /* INImageBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +139,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB1331F81D7EC0C800B99F04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -88,6 +154,7 @@
 			children = (
 				CB1331721D7EBD1000B99F04 /* Photos.framework */,
 				CB1331381D7EBCD000B99F04 /* INImagePickerController */,
+				CB1331FC1D7EC0C800B99F04 /* INImagePickerControllerBundle */,
 				CB1331371D7EBCD000B99F04 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				CB1331361D7EBCD000B99F04 /* libINImagePickerController.a */,
+				CB1331FB1D7EC0C800B99F04 /* INImagePickerController.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,12 +198,14 @@
 		CB1331441D7EBCF700B99F04 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CB1331451D7EBCF700B99F04 /* INImageDetailViewController.h */,
-				CB1331461D7EBCF700B99F04 /* INImageDetailViewController.m */,
-				CB1331471D7EBCF700B99F04 /* INImageListViewController.h */,
-				CB1331481D7EBCF700B99F04 /* INImageListViewController.m */,
 				CB1331491D7EBCF700B99F04 /* INImagePickerController.h */,
 				CB13314A1D7EBCF700B99F04 /* INImagePickerController.m */,
+				CB1331471D7EBCF700B99F04 /* INImageListViewController.h */,
+				CB1331481D7EBCF700B99F04 /* INImageListViewController.m */,
+				CB1331451D7EBCF700B99F04 /* INImageDetailViewController.h */,
+				CB1331461D7EBCF700B99F04 /* INImageDetailViewController.m */,
+				CB7874861DAB9A9D00C15411 /* INImageEditViewController.h */,
+				CB7874871DAB9A9D00C15411 /* INImageEditViewController.m */,
 				CB13314B1D7EBCF700B99F04 /* INPickerBaseViewController.h */,
 				CB13314C1D7EBCF700B99F04 /* INPickerBaseViewController.m */,
 			);
@@ -173,8 +243,26 @@
 				CB1331641D7EBCF700B99F04 /* INAlbumSelectTitle.m */,
 				CB1331651D7EBCF700B99F04 /* INImageDetailCell.h */,
 				CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */,
+				CB78748F1DABA51C00C15411 /* INImageBorderView.h */,
+				CB7874901DABA51C00C15411 /* INImageBorderView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CB1331FC1D7EC0C800B99F04 /* INImagePickerControllerBundle */ = {
+			isa = PBXGroup;
+			children = (
+				CB13322F1D7EC36D00B99F04 /* picker_down@2x.png */,
+				CB1332301D7EC36D00B99F04 /* picker_down@3x.png */,
+				CB1332311D7EC36D00B99F04 /* picker_mask@2x.png */,
+				CB1332321D7EC36D00B99F04 /* picker_mask@3x.png */,
+				CB1332331D7EC36D00B99F04 /* picker_selected@2x.png */,
+				CB1332341D7EC36D00B99F04 /* picker_selected@3x.png */,
+				CB1332351D7EC36D00B99F04 /* picker_unselected@2x.png */,
+				CB1332361D7EC36D00B99F04 /* picker_unselected@3x.png */,
+				CB1331FD1D7EC0C800B99F04 /* Info.plist */,
+			);
+			path = INImagePickerControllerBundle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +274,8 @@
 			files = (
 				CB1331781D7EBD3800B99F04 /* INImagePickerController.h in Headers */,
 				CB13317C1D7EBD3900B99F04 /* INImageManager.h in Headers */,
+				CB7874911DABA51C00C15411 /* INImageBorderView.h in Headers */,
+				CB7874881DAB9A9D00C15411 /* INImageEditViewController.h in Headers */,
 				CB1331761D7EBD3800B99F04 /* INImageDetailViewController.h in Headers */,
 				CB1331771D7EBD3800B99F04 /* INImageListViewController.h in Headers */,
 				CB1331791D7EBD3800B99F04 /* INPickerBaseViewController.h in Headers */,
@@ -209,6 +299,7 @@
 				CB1331331D7EBCD000B99F04 /* Frameworks */,
 				CB1331341D7EBCD000B99F04 /* CopyFiles */,
 				CB1331751D7EBD2C00B99F04 /* Headers */,
+				CB1331E61D7EBE5F00B99F04 /* Build Framework */,
 			);
 			buildRules = (
 			);
@@ -218,6 +309,23 @@
 			productName = INImagePickerController;
 			productReference = CB1331361D7EBCD000B99F04 /* libINImagePickerController.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		CB1331FA1D7EC0C800B99F04 /* INImagePickerControllerBundle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB1331FE1D7EC0C800B99F04 /* Build configuration list for PBXNativeTarget "INImagePickerControllerBundle" */;
+			buildPhases = (
+				CB1331F71D7EC0C800B99F04 /* Sources */,
+				CB1331F81D7EC0C800B99F04 /* Frameworks */,
+				CB1331F91D7EC0C800B99F04 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = INImagePickerControllerBundle;
+			productName = INImagePickerControllerBundle;
+			productReference = CB1331FB1D7EC0C800B99F04 /* INImagePickerController.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -229,6 +337,12 @@
 				ORGANIZATIONNAME = MaMingkun;
 				TargetAttributes = {
 					CB1331351D7EBCD000B99F04 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					CB1331E71D7EBEA500B99F04 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					CB1331FA1D7EC0C800B99F04 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -246,9 +360,60 @@
 			projectRoot = "";
 			targets = (
 				CB1331351D7EBCD000B99F04 /* INImagePickerController */,
+				CB1331E71D7EBEA500B99F04 /* Framework */,
+				CB1331FA1D7EC0C800B99F04 /* INImagePickerControllerBundle */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB1331F91D7EC0C800B99F04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB13323C1D7EC36D00B99F04 /* picker_selected@3x.png in Resources */,
+				CB1332371D7EC36D00B99F04 /* picker_down@2x.png in Resources */,
+				CB13323A1D7EC36D00B99F04 /* picker_mask@3x.png in Resources */,
+				CB13323D1D7EC36D00B99F04 /* picker_unselected@2x.png in Resources */,
+				CB1332391D7EC36D00B99F04 /* picker_mask@2x.png in Resources */,
+				CB13323B1D7EC36D00B99F04 /* picker_selected@2x.png in Resources */,
+				CB1332381D7EC36D00B99F04 /* picker_down@3x.png in Resources */,
+				CB13323E1D7EC36D00B99F04 /* picker_unselected@3x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CB1331E61D7EBE5F00B99F04 /* Build Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport FRAMEWORK_LOCN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework\"\n\n# Create the path to the real Headers die\nmkdir -p \"${FRAMEWORK_LOCN}/Versions/A/Headers\"\n\n# Create the required symlinks\n/bin/ln -sfh A \"${FRAMEWORK_LOCN}/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${FRAMEWORK_LOCN}/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \\\n\"${FRAMEWORK_LOCN}/${PRODUCT_NAME}\"\n\n# Copy the public headers into the framework\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \\\n\"${FRAMEWORK_LOCN}/Versions/A/Headers\"\n\n";
+		};
+		CB1331EB1D7EBEA800B99F04 /* MultiPlatform Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "MultiPlatform Build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n# If we're already inside this script then die\nif [ -n \"$RW_MULTIPLATFORM_BUILD_IN_PROGRESS\" ]; then\nexit 0\nfi\nexport RW_MULTIPLATFORM_BUILD_IN_PROGRESS=1\n\nRW_FRAMEWORK_NAME=${PROJECT_NAME}\nRW_INPUT_STATIC_LIB=\"lib${PROJECT_NAME}.a\"\nRW_FRAMEWORK_LOCATION=\"${BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework\"\n\nfunction build_static_library {\n    # Will rebuild the static library as specified\n    #     build_static_library sdk\n    xcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" \\\n    -target \"${TARGET_NAME}\" \\\n    -configuration \"${CONFIGURATION}\" \\\n    -sdk \"${1}\" \\\n    ONLY_ACTIVE_ARCH=NO \\\n    BUILD_DIR=\"${BUILD_DIR}\" \\\n    OBJROOT=\"${OBJROOT}\" \\\n    BUILD_ROOT=\"${BUILD_ROOT}\" \\\n    SYMROOT=\"${SYMROOT}\" $ACTION\n}\n\nfunction make_fat_library {\n    # Will smash 2 static libs together\n    #     make_fat_library in1 in2 out\n    xcrun lipo -create \"${1}\" \"${2}\" -output \"${3}\"\n}\n\n\n# 1 - Extract the platform (iphoneos/iphonesimulator) from the SDK name\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]; then\nRW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# 2 - Extract the version from the SDK\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]; then\nRW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# 3 - Determine the other platform\nif [ \"$RW_SDK_PLATFORM\" == \"iphoneos\" ]; then\nRW_OTHER_PLATFORM=iphonesimulator\nelse\nRW_OTHER_PLATFORM=iphoneos\nfi\n\n# 4 - Find the build directory\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$RW_SDK_PLATFORM$ ]]; then\nRW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${RW_OTHER_PLATFORM}\"\nelse\necho \"Could not find other platform build directory.\"\nexit 1\nfi\n\n\n# Build the other platform.\nbuild_static_library \"${RW_OTHER_PLATFORM}${RW_SDK_VERSION}\"\n\n# If we're currently building for iphonesimulator, then need to rebuild\n#   to ensure that we get both i386 and x86_64\nif [ \"$RW_SDK_PLATFORM\" == \"iphonesimulator\" ]; then\nbuild_static_library \"${SDK_NAME}\"\nfi\n\n# Join the 2 static libs into 1 and push into the .framework\nmake_fat_library \"${BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_FRAMEWORK_LOCATION}/Versions/A/${RW_FRAMEWORK_NAME}\"\n\n\n\n# Ensure that the framework is present in both platform's build directories\ncp -a \"${RW_FRAMEWORK_LOCATION}/Versions/A/${RW_FRAMEWORK_NAME}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework/Versions/A/${RW_FRAMEWORK_NAME}\"\n\n# Copy the framework to the user's desktop\nditto \"${RW_FRAMEWORK_LOCATION}\" \"${HOME}/Desktop/${RW_FRAMEWORK_NAME}.framework\"\n\n\n# Copy the resources bundle to the user's desktop\nditto \"${BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.bundle\" \\\n\"${HOME}/Desktop/${RW_FRAMEWORK_NAME}.bundle\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CB1331321D7EBCD000B99F04 /* Sources */ = {
@@ -256,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB13316F1D7EBCF700B99F04 /* INAlbumSelectCell.m in Sources */,
+				CB7874891DAB9A9D00C15411 /* INImageEditViewController.m in Sources */,
 				CB13316E1D7EBCF700B99F04 /* INAlbumCell.m in Sources */,
 				CB13316B1D7EBCF700B99F04 /* INAlbum.m in Sources */,
 				CB1331691D7EBCF700B99F04 /* INImagePickerController.m in Sources */,
@@ -264,12 +430,33 @@
 				CB13316C1D7EBCF700B99F04 /* INImageAsset.m in Sources */,
 				CB13316D1D7EBCF700B99F04 /* INImageManager.m in Sources */,
 				CB1331701D7EBCF700B99F04 /* INAlbumSelectTitle.m in Sources */,
+				CB7874921DABA51C00C15411 /* INImageBorderView.m in Sources */,
 				CB13316A1D7EBCF700B99F04 /* INPickerBaseViewController.m in Sources */,
 				CB1331681D7EBCF700B99F04 /* INImageListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB1331F71D7EC0C800B99F04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB1331ED1D7EBEAD00B99F04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB1331351D7EBCD000B99F04 /* INImagePickerController */;
+			targetProxy = CB1331EC1D7EBEAD00B99F04 /* PBXContainerItemProxy */;
+		};
+		CB1332021D7EC10200B99F04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB1331FA1D7EC0C800B99F04 /* INImagePickerControllerBundle */;
+			targetProxy = CB1332011D7EC10200B99F04 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CB13313D1D7EBCD000B99F04 /* Debug */ = {
@@ -355,20 +542,70 @@
 		CB1331401D7EBCD000B99F04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/${PROJECT_NAME}";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
 			};
 			name = Debug;
 		};
 		CB1331411D7EBCD000B99F04 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/${PROJECT_NAME}";
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		CB1331E91D7EBEA500B99F04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CB1331EA1D7EBEA500B99F04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CB1331FF1D7EC0C800B99F04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
+				INFOPLIST_FILE = INImagePickerControllerBundle/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.Yuuki.INImagePickerControllerBundle;
+				PRODUCT_NAME = INImagePickerController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		CB1332001D7EC0C800B99F04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
+				INFOPLIST_FILE = INImagePickerControllerBundle/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.Yuuki.INImagePickerControllerBundle;
+				PRODUCT_NAME = INImagePickerController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -389,6 +626,24 @@
 			buildConfigurations = (
 				CB1331401D7EBCD000B99F04 /* Debug */,
 				CB1331411D7EBCD000B99F04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB1331E81D7EBEA500B99F04 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB1331E91D7EBEA500B99F04 /* Debug */,
+				CB1331EA1D7EBEA500B99F04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB1331FE1D7EC0C800B99F04 /* Build configuration list for PBXNativeTarget "INImagePickerControllerBundle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB1331FF1D7EC0C800B99F04 /* Debug */,
+				CB1332001D7EC0C800B99F04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

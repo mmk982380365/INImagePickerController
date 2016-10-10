@@ -7,14 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Photos/Photos.h>
+#import <UIKit/UIKit.h>
 
 @interface INAlbum : NSObject
 
-@property (nonatomic, strong) PHAssetCollection *collection;
+@property (nonatomic, strong) id collection;
 
 @property (nonatomic, strong) UIImage *thumbnail;
 
 @property (nonatomic, assign) NSInteger countOfImage;
+
+@property (nonatomic, strong) NSString *title;
 
 @end

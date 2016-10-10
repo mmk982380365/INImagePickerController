@@ -13,8 +13,8 @@
 		CB13321A1D7EC18000B99F04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB1332181D7EC18000B99F04 /* Main.storyboard */; };
 		CB13321C1D7EC18000B99F04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB13321B1D7EC18000B99F04 /* Assets.xcassets */; };
 		CB13321F1D7EC18000B99F04 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB13321D1D7EC18000B99F04 /* LaunchScreen.storyboard */; };
-		CB5AF9C11D826C1300343843 /* INImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CB5AF9BF1D826C1300343843 /* INImagePickerController.bundle */; };
-		CB5AF9C21D826C1300343843 /* INImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB5AF9C01D826C1300343843 /* INImagePickerController.framework */; };
+		CBD06E331DABB9EA00452996 /* INImagePickerController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBD06E311DABB9EA00452996 /* INImagePickerController.framework */; };
+		CBD06E341DABB9EA00452996 /* INImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CBD06E321DABB9EA00452996 /* INImagePickerController.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,8 @@
 		CB13321B1D7EC18000B99F04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB13321E1D7EC18000B99F04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB1332201D7EC18000B99F04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB5AF9BF1D826C1300343843 /* INImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = INImagePickerController.bundle; sourceTree = "<group>"; };
-		CB5AF9C01D826C1300343843 /* INImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = INImagePickerController.framework; sourceTree = "<group>"; };
+		CBD06E311DABB9EA00452996 /* INImagePickerController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = INImagePickerController.framework; sourceTree = "<group>"; };
+		CBD06E321DABB9EA00452996 /* INImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = INImagePickerController.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB5AF9C21D826C1300343843 /* INImagePickerController.framework in Frameworks */,
+				CBD06E331DABB9EA00452996 /* INImagePickerController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,8 +63,8 @@
 		CB13320E1D7EC18000B99F04 /* INImagePickerControllerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				CB5AF9BF1D826C1300343843 /* INImagePickerController.bundle */,
-				CB5AF9C01D826C1300343843 /* INImagePickerController.framework */,
+				CBD06E311DABB9EA00452996 /* INImagePickerController.framework */,
+				CBD06E321DABB9EA00452996 /* INImagePickerController.bundle */,
 				CB1332121D7EC18000B99F04 /* AppDelegate.h */,
 				CB1332131D7EC18000B99F04 /* AppDelegate.m */,
 				CB1332151D7EC18000B99F04 /* ViewController.h */,
@@ -117,6 +117,8 @@
 				TargetAttributes = {
 					CB13320B1D7EC18000B99F04 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = S429W65P38;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -145,7 +147,7 @@
 			files = (
 				CB13321F1D7EC18000B99F04 /* LaunchScreen.storyboard in Resources */,
 				CB13321C1D7EC18000B99F04 /* Assets.xcassets in Resources */,
-				CB5AF9C11D826C1300343843 /* INImagePickerController.bundle in Resources */,
+				CBD06E341DABB9EA00452996 /* INImagePickerController.bundle in Resources */,
 				CB13321A1D7EC18000B99F04 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +271,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S429W65P38;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/INImagePickerControllerDemo",
@@ -277,6 +280,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.Yuuki.INImagePickerControllerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e1b9abe1-725c-45be-ac5b-ae3a70d00f65";
+				PROVISIONING_PROFILE_SPECIFIER = 922all;
 			};
 			name = Debug;
 		};
@@ -284,6 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/INImagePickerControllerDemo",

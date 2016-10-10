@@ -37,6 +37,8 @@
 
 @property (nonatomic, assign) BOOL hide;
 
+@property (nonatomic, strong) INImageAsset *editSelectedAsset;
+
 @end
 
 @implementation INImageListViewController
@@ -99,6 +101,7 @@
 
 -(void)sendToEditView{
     INImageEditViewController *edit = [[INImageEditViewController alloc] init];
+    edit.asset = self.editSelectedAsset;
     [self.navigationController pushViewController:edit animated:YES];
 }
 
@@ -203,6 +206,8 @@
     
     INImagePickerController *picker = (INImagePickerController *)self.navigationController;
     if (picker.edit) {
+        NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
+        self.editSelectedAsset = selectArr.lastObject;
         [self sendToEditView];
     }else{
         [[(INImagePickerController *)self.navigationController manager] requestSelectedImages:^(NSArray *resultArray) {
@@ -305,6 +310,8 @@
     INImagePickerController *picker = (INImagePickerController *)self.navigationController;
     
     if (picker.edit) {
+        INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
+        self.editSelectedAsset = asset;
         [self sendToEditView];
     }else{
         INImageDetailViewController *detail = [[INImageDetailViewController alloc] init];

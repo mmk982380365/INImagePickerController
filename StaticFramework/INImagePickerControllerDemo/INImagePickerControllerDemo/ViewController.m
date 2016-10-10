@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <INImagePickerController/INImagePickerController.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface ViewController ()<UINavigationControllerDelegate,INImagePickerControllerDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -28,7 +29,7 @@
 
 - (IBAction)showPickerView:(UIBarButtonItem *)sender {
     INImagePickerController *picker = [[INImagePickerController alloc] init];
-    picker.onlyLocations = YES;
+//    picker.onlyLocations = YES;
     picker.delegate = self;
     
     [self presentViewController:picker animated:YES completion:nil];

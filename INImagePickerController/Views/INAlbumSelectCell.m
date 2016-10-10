@@ -51,6 +51,12 @@
     if (self.clickBlock) {
         self.clickBlock(self.indexPath);
     }
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)];
+    animation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];
+    animation.duration = 0.2;
+    [self.clickButton.layer addAnimation:animation forKey:@"h"];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kINAlbumSelectCellClickNotification object:self.indexPath];
 }
 

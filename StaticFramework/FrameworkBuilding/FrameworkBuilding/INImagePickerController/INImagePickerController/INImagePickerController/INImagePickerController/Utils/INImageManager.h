@@ -40,8 +40,12 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 @property (nonatomic, assign) BOOL onlyLocations;
 
+@property (nonatomic, assign,class) CGSize maxImageSize;
+
 -(void)requestSelectedImages:(void (^)(NSArray *resultArray))resultBlock;
 
 -(void)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *result))completion;
+
+-(void)requestEditedImageWithAsset:(INImageAsset *)asset clipRect:(CGRect)rect result:(void (^)(NSArray *resultArray))resultBlock;
 
 @end

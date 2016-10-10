@@ -12,7 +12,7 @@
 
 NSString * const INImagePickerControllerOriginalImage = @"INImagePickerControllerOriginalImage";
 NSString * const INImagePickerControllerLocation = @"INImagePickerControllerLocation";
-
+NSString * const INImagePickerControllerEditedImage = @"INImagePickerControllerEditedImage";
 @interface INImagePickerController ()
 
 @property (nonatomic, strong) INImageListViewController *imageListViewController;

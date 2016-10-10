@@ -18,6 +18,9 @@
 
 #endif
 
+#import <AssetsLibrary/AssetsLibrary.h>
+
+
 
 #import "INImagePickerController.h"
 #import "INImageAsset.h"
@@ -25,11 +28,11 @@
 
 @interface INImageManager ()
 
-#ifndef __IPHONE_8_0
+//#ifndef __IPHONE_8_0
 
 //#else
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
-#endif
+//#endif
 
 @end
 
@@ -44,9 +47,9 @@
     [self.albumArray removeAllObjects];
     [self.selectedArray removeAllObjects];
     
-#ifndef __IPHONE_8_0
+//#ifndef __IPHONE_8_0
     self.assetsLibrary = nil;
-#endif
+//#endif
     
 }
 
@@ -57,11 +60,11 @@
         
 //        [self defineVersion];
        
-#ifndef __IPHONE_8_0
+//#ifndef __IPHONE_8_0
       
         self.assetsLibrary = [[ALAssetsLibrary alloc] init];
         
-#endif
+//#endif
         
         self.albumArray = [NSMutableArray arrayWithCapacity:0];
         self.showedArray = [NSMutableArray arrayWithCapacity:0];
@@ -80,7 +83,8 @@
 
 -(void)fetchAlbums:(void (^)())result{
  
-#ifndef __IPHONE_8_0
+    
+    if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {
         if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized || [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined) {
             [self loadAlbumsIn7];
             if (result) {
@@ -91,7 +95,7 @@
                 result();
             }
         }
-#else
+    }else{
         if (PHPhotoLibrary.authorizationStatus == PHAuthorizationStatusNotDetermined) {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
@@ -107,68 +111,60 @@
                 result();
             }
         }
+    }
+#ifndef __IPHONE_8_0
+    
+#else
+    
 #endif
     
 }
 
 -(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)())resultBlock{
     @synchronized(self.showedArray) {
-       
-#ifndef __IPHONE_8_0
         
-        ALAssetsGroup *group = album.collection;
-        [self.showedArray removeAllObjects];
-        [self.selectedArray removeAllObjects];
-        
-        [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if (self.onlyLocations == NO) {
-                if (index < group.numberOfAssets) {
-                    INImageAsset *asset = [[INImageAsset alloc] init];
-                    asset.imageAsset = result;
-                    asset.selected = NO;
-                    asset.num = 0;
-                    
-                    asset.imageWidth = result.defaultRepresentation.dimensions.width;
-                    asset.imageHeight = result.defaultRepresentation.dimensions.height;
-                    
-                    [self.showedArray addObject:asset];
-                }
-                
-            }else{
-                CLLocation *location = [result valueForProperty:ALAssetPropertyLocation];
-                if (location) {
+        if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {
+            ALAssetsGroup *group = album.collection;
+            [self.showedArray removeAllObjects];
+            [self.selectedArray removeAllObjects];
+            
+            [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                if (self.onlyLocations == NO) {
                     if (index < group.numberOfAssets) {
                         INImageAsset *asset = [[INImageAsset alloc] init];
                         asset.imageAsset = result;
                         asset.selected = NO;
                         asset.num = 0;
+                        
                         asset.imageWidth = result.defaultRepresentation.dimensions.width;
                         asset.imageHeight = result.defaultRepresentation.dimensions.height;
+                        
                         [self.showedArray addObject:asset];
                     }
+                    
+                }else{
+                    CLLocation *location = [result valueForProperty:ALAssetPropertyLocation];
+                    if (location) {
+                        if (index < group.numberOfAssets) {
+                            INImageAsset *asset = [[INImageAsset alloc] init];
+                            asset.imageAsset = result;
+                            asset.selected = NO;
+                            asset.num = 0;
+                            asset.imageWidth = result.defaultRepresentation.dimensions.width;
+                            asset.imageHeight = result.defaultRepresentation.dimensions.height;
+                            [self.showedArray addObject:asset];
+                        }
+                    }
                 }
-            }
-        }];
-        
-#else
-        
-        
-        PHFetchResult *assetFetch = [PHAsset fetchAssetsInAssetCollection:album.collection options:nil];
-        [self.showedArray removeAllObjects];
-        [self.selectedArray removeAllObjects];
-        for (PHAsset *imageAsset in assetFetch) {
-            
-            
-            if (self.onlyLocations == NO) {
-                INImageAsset *asset = [[INImageAsset alloc] init];
-                asset.imageAsset = imageAsset;
-                asset.selected = NO;
-                asset.num = 0;
-                asset.imageWidth = imageAsset.pixelWidth;
-                asset.imageHeight = imageAsset.pixelHeight;
-                [self.showedArray addObject:asset];
-            }else{
-                if (imageAsset.location) {
+            }];
+        }else{
+            PHFetchResult *assetFetch = [PHAsset fetchAssetsInAssetCollection:album.collection options:nil];
+            [self.showedArray removeAllObjects];
+            [self.selectedArray removeAllObjects];
+            for (PHAsset *imageAsset in assetFetch) {
+                
+                
+                if (self.onlyLocations == NO) {
                     INImageAsset *asset = [[INImageAsset alloc] init];
                     asset.imageAsset = imageAsset;
                     asset.selected = NO;
@@ -176,14 +172,33 @@
                     asset.imageWidth = imageAsset.pixelWidth;
                     asset.imageHeight = imageAsset.pixelHeight;
                     [self.showedArray addObject:asset];
+                }else{
+                    if (imageAsset.location) {
+                        INImageAsset *asset = [[INImageAsset alloc] init];
+                        asset.imageAsset = imageAsset;
+                        asset.selected = NO;
+                        asset.num = 0;
+                        asset.imageWidth = imageAsset.pixelWidth;
+                        asset.imageHeight = imageAsset.pixelHeight;
+                        [self.showedArray addObject:asset];
+                    }
                 }
+                
+                
+                
+                
             }
-            
-            
-            
-            
         }
-        #endif
+       
+#ifndef __IPHONE_8_0
+        
+        
+        
+#else
+        
+        
+        
+#endif
     }
 
     if (resultBlock) {
@@ -194,7 +209,7 @@
 -(void)loadAlbumsIn7{
     __weak typeof(self) ws = self;
     
-#ifndef __IPHONE_8_0
+//#ifndef __IPHONE_8_0
     
     [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
         __strong typeof(ws) self = ws;
@@ -244,7 +259,7 @@
         NSLog(@"Error with :%@",error);
     }];
     
-#endif
+//#endif
     
 }
 
@@ -406,46 +421,53 @@
 -(void)requestSelectedImages:(void (^)(NSArray *))resultBlock{
     
     NSMutableArray *resultArray = [NSMutableArray arrayWithCapacity:0];
-#ifndef __IPHONE_8_0
-    for (INImageAsset *selectAss in self.selectedArray) {
-        ALAsset *asset = selectAss.imageAsset;
-        
-        UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
-        CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
-        if (location) {
-            NSDictionary *dict = @{INImagePickerControllerOriginalImage:image,INImagePickerControllerLocation:location};
-            [resultArray addObject:dict];
-        }else{
-            NSDictionary *dict = @{INImagePickerControllerOriginalImage:image};
-            [resultArray addObject:dict];
-        }
-        
-        
-    }
-#else
     
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.synchronous = YES;
-    option.networkAccessAllowed = YES;
-    for (INImageAsset *selectAss in self.selectedArray) {
-        PHAsset *asset = selectAss.imageAsset;
-        
-        
-        [[PHImageManager defaultManager] requestImageDataForAsset:asset options:option resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-            UIImage *image = [UIImage imageWithData:imageData];
+    if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {
+        for (INImageAsset *selectAss in self.selectedArray) {
+            ALAsset *asset = selectAss.imageAsset;
             
-            if (asset.location) {
-                NSDictionary *dict = @{INImagePickerControllerOriginalImage:image,INImagePickerControllerLocation:asset.location};
+            UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage scale:asset.defaultRepresentation.scale orientation:(UIImageOrientation)asset.defaultRepresentation.orientation];
+            CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
+            if (location) {
+                NSDictionary *dict = @{INImagePickerControllerOriginalImage:image,INImagePickerControllerLocation:location};
                 [resultArray addObject:dict];
             }else{
                 NSDictionary *dict = @{INImagePickerControllerOriginalImage:image};
                 [resultArray addObject:dict];
             }
             
-        }];
-        
+            
+        }
+    }else{
+        PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+        option.synchronous = YES;
+        option.networkAccessAllowed = YES;
+        for (INImageAsset *selectAss in self.selectedArray) {
+            PHAsset *asset = selectAss.imageAsset;
+            
+            
+            [[PHImageManager defaultManager] requestImageDataForAsset:asset options:option resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                if (asset.location) {
+                    NSDictionary *dict = @{INImagePickerControllerOriginalImage:image,INImagePickerControllerLocation:asset.location};
+                    [resultArray addObject:dict];
+                }else{
+                    NSDictionary *dict = @{INImagePickerControllerOriginalImage:image};
+                    [resultArray addObject:dict];
+                }
+                
+            }];
+            
+        }
     }
-#endif
+    
+//#ifndef __IPHONE_8_0
+    
+//#else
+    
+    
+//#endif
     
     if (resultBlock) {
         resultBlock([resultArray copy]);
@@ -468,7 +490,7 @@
         }];
         
     }else{
-#ifndef __IPHONE_8_0
+//#ifndef __IPHONE_8_0
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             ALAsset *imageAsset = asset.imageAsset;
             UIImage *image;
@@ -503,9 +525,47 @@
         });
         
 
-#endif
+//#endif
     }
 }
 
+-(void)requestEditedImageWithAsset:(INImageAsset *)asset clipRect:(CGRect)rect result:(void (^)(NSArray *))resultBlock{
+    
+    NSLog(@"%@",NSStringFromCGRect(rect));
+    
+    [self requestImageForAsset:asset size:[[self class] maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result) {
+        
+        CGImageRef imgRef = result.CGImage;
+        CGImageRef newRef = CGImageCreateWithImageInRect(imgRef, rect);
+        UIImage *editedImage = [UIImage imageWithCGImage:newRef];
+        CGImageRelease(newRef);
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:0];
+        [dict setObject:result forKey:INImagePickerControllerOriginalImage];
+        [dict setObject:editedImage forKey:INImagePickerControllerEditedImage];
+        
+        if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+            PHAsset *imageAsset = asset.imageAsset;
+            if (imageAsset.location) {
+                [dict setObject:imageAsset.location forKey:INImagePickerControllerLocation];
+            }
+        }else{
+            ALAsset *imageAsset = asset.imageAsset;
+            
+            CLLocation *location = [imageAsset valueForProperty:ALAssetPropertyLocation];
+            if (location) {
+                [dict setObject:location forKey:INImagePickerControllerLocation];
+            }
+        }
+        
+        if (resultBlock) {
+            resultBlock(@[dict]);
+        }
+    }];
+}
+
++(CGSize)maxImageSize{
+    return PHImageManagerMaximumSize;
+}
 
 @end

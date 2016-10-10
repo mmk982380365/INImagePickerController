@@ -13,6 +13,7 @@
 #import "INAlbumCell.h"
 #import "INImageDetailViewController.h"
 //#import "UIView+Position.h"
+#import "INImageEditViewController.h"
 #import "INAlbum.h"
 #import "INImageAsset.h"
 
@@ -34,10 +35,13 @@
 
 @property (nonatomic, strong) UIBarButtonItem *confirmButton;
 
+@property (nonatomic, assign) BOOL hide;
+
+@property (nonatomic, strong) INImageAsset *editSelectedAsset;
+
 @end
 
 @implementation INImageListViewController
-
 
 - (void)dealloc
 {
@@ -48,27 +52,36 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor blackColor];
-    
-    
-    NSLog(@"%@",INImagePickerControllerLocation);
-    
+    //设置导航栏标题的视图
     self.navigationItem.titleView = self.albumTitle;
     
+    //图片列表
     [self.view addSubview:self.collectionView];
+    //相册列表
     [self.view addSubview:self.albumTableView];
     
+    //取消按钮
     self.navigationItem.rightBarButtonItem = self.cancelButton;
     
+    //设置工具栏按钮
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *fix = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    self.toolbarItems = @[fix,self.previewButton,flex,self.confirmButton,fix];
+    
+    INImagePickerController *picker = (INImagePickerController *)self.navigationController;
+    if (picker.edit) {
+        self.toolbarItems = @[flex,self.confirmButton,fix];
+    }else{
+        self.toolbarItems = @[fix,self.previewButton,flex,self.confirmButton,fix];
+    }
     
     
     
+    
+    //默认显示相机胶卷  无数据则显示第一个相册
     BOOL isFind = NO;
     INAlbum *collection = nil;
     for (INAlbum *album in [(INImagePickerController *)self.navigationController manager].albumArray) {
-        if ([album.collection.localizedTitle isEqualToString:@"相机胶卷"]) {
+        if ([album.title isEqualToString:@"相机胶卷"]) {
             isFind = YES;
             collection = album;
             break;
@@ -77,25 +90,35 @@
     if (isFind == NO && [(INImagePickerController *)self.navigationController manager].albumArray.count > 0) {
         collection = [(INImagePickerController *)self.navigationController manager].albumArray.firstObject;
     }
-    
-    self.albumTitle.title = collection.collection.localizedTitle;
+    //设置标题
+    self.albumTitle.title = collection.title;
     [self loadAlbums:collection];
     
+    //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellClicked:) name:kINAlbumSelectCellClickNotification object:nil];
-    
     
 }
 
+-(void)sendToEditView{
+    INImageEditViewController *edit = [[INImageEditViewController alloc] init];
+    edit.asset = self.editSelectedAsset;
+    [self.navigationController pushViewController:edit animated:YES];
+}
+
+//选择图片的通知回调
 -(void)cellClicked:(NSNotification *)note{
+    //选择的indexPath
     NSIndexPath *indexPath = note.object;
+    //选择model
     INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
     
+    //更改数组状态
     [[(INImagePickerController *)self.navigationController manager] selectImage:asset result:^(NSArray *reloadedIndexPaths) {
         [self.collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
     }];
     
     
-    
+    //更新toolBar按钮状态
     NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
     
     if (selectArr.count > 0) {
@@ -111,26 +134,24 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
-
 #pragma mark - data
 
 -(void)reloadData{
     [self.albumTableView reloadData];
     
-    
-    
-    
 }
-
+/**
+ *  选取相册
+ *
+ *  @param collection 要选择的相册
+ */
 -(void)loadAlbums:(INAlbum *)collection{
+    //选择相册
     __weak typeof(self) ws = self;
-    [[(INImagePickerController *)self.navigationController manager] loadImagesWithAlbums:collection.collection result:^{
+    [[(INImagePickerController *)self.navigationController manager] loadImagesWithAlbums:collection result:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [ws.collectionView reloadData];
+            //滚动视图到底部
             if ([(INImagePickerController *)self.navigationController manager].showedArray.count > 0) {
                 [ws.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:[(INImagePickerController *)self.navigationController manager].showedArray.count - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
             }
@@ -140,24 +161,25 @@
 }
 
 #pragma mark - btnAction
-
+//取消选择
 -(void)cancelSelect:(id)sender{
-    NSLog(@"取消");
+//    NSLog(@"取消");
     if ([(INImagePickerController *)self.navigationController delegate] && [[(INImagePickerController *)self.navigationController delegate] conformsToProtocol:@protocol(INImagePickerControllerDelegate)] && [[(INImagePickerController *)self.navigationController delegate] respondsToSelector:@selector(INImagePickerControllerDidCancel:)]) {
         [[(INImagePickerController *)self.navigationController delegate] INImagePickerControllerDidCancel:(INImagePickerController *)self.navigationController];
         
     }
     
 }
-
+//预览按钮
 -(void)previewPhotos:(id)sender{
-    NSLog(@"预览");
+//    NSLog(@"预览");
     INImageDetailViewController *detail = [[INImageDetailViewController alloc] init];
+    //进入后显示选中的图片
     if ([(INImagePickerController *)self.navigationController manager].selectedArray.count > 0) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[[(INImagePickerController *)self.navigationController manager].showedArray indexOfObject:[(INImagePickerController *)self.navigationController manager].selectedArray.firstObject] inSection:0];
         detail.selectedIndexPath = indexPath;
     }
-    
+    //返回刷新toolBar状态
     detail.reloadedBlock = ^(NSArray *reloadedIndexPaths){
         [self.collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
         NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
@@ -177,19 +199,29 @@
     
     [self.navigationController pushViewController:detail animated:YES];
 }
-
+//确认事件
 -(void)confirmToSelect:(id)sender{
-    NSLog(@"确认");
+//    NSLog(@"确认");
+    //请求选中的图片回送给调用的对象
     
-    [[(INImagePickerController *)self.navigationController manager] requestSelectedImages:^(NSArray *resultArray) {
-        if ([(INImagePickerController *)self.navigationController delegate] && [[(INImagePickerController *)self.navigationController delegate] conformsToProtocol:@protocol(INImagePickerControllerDelegate)] && [[(INImagePickerController *)self.navigationController delegate] respondsToSelector:@selector(INImagePickerController:didFinishPickingMediaWithArray:)]) {
-            [[(INImagePickerController *)self.navigationController delegate] INImagePickerController:(INImagePickerController *)self.navigationController didFinishPickingMediaWithArray:resultArray];
-            
-        }
-    }];
+    INImagePickerController *picker = (INImagePickerController *)self.navigationController;
+    if (picker.edit) {
+        NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
+        self.editSelectedAsset = selectArr.lastObject;
+        [self sendToEditView];
+    }else{
+        [[(INImagePickerController *)self.navigationController manager] requestSelectedImages:^(NSArray *resultArray) {
+            if ([(INImagePickerController *)self.navigationController delegate] && [[(INImagePickerController *)self.navigationController delegate] conformsToProtocol:@protocol(INImagePickerControllerDelegate)] && [[(INImagePickerController *)self.navigationController delegate] respondsToSelector:@selector(INImagePickerController:didFinishPickingMediaWithArray:)]) {
+                [[(INImagePickerController *)self.navigationController delegate] INImagePickerController:(INImagePickerController *)self.navigationController didFinishPickingMediaWithArray:resultArray];
+                
+            }
+        }];
+    }
+    
+    
     
 }
-
+//点击titleView的回调 动画
 -(void)clickAction:(INAlbumSelectTitle *)sender{
     if (sender.isSelected == NO) {//选择
         sender.selected = YES;
@@ -216,13 +248,13 @@
     if (cell == nil) {
         cell = [[INAlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    
+    //设置cell的
     NSArray *arr = [(INImagePickerController *)self.navigationController manager].albumArray;
     
     
     INAlbum *collection = arr[indexPath.row];
     
-    cell.albumName = collection.collection.localizedTitle;
+    cell.albumName = collection.title;
     
 
     cell.albumImageCount = collection.countOfImage;
@@ -239,7 +271,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     INAlbum *collection = [(INImagePickerController *)self.navigationController manager].albumArray[indexPath.row];
-    self.albumTitle.title = collection.collection.localizedTitle;
+    self.albumTitle.title = collection.title;
     [self loadAlbums:collection];
     [self clickAction:self.albumTitle];
 }
@@ -255,44 +287,16 @@
     
     
     INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
-    [[PHImageManager defaultManager] requestImageForAsset:asset.imageAsset targetSize:CGSizeMake(200, 200) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    
+    [[(INImagePickerController *)self.navigationController manager] requestImageForAsset:asset size:CGSizeMake(200, 200) resizeMode:INImagePickerResizeModeNone completion:^(UIImage *result) {
         cell.image = result;
     }];
+    
     cell.clicked = asset.selected;
     cell.num = asset.num;
     
     
     cell.indexPath = indexPath;
-    
-    
-//    cell.clickBlock = ^(NSIndexPath *indexPath){
-//        
-//        __strong typeof(ws) self = ws;
-//        
-//        INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
-//        
-//        [[(INImagePickerController *)self.navigationController manager] selectImage:asset result:^(NSArray *reloadedIndexPaths) {
-//            [collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
-//        }];
-//        
-//        
-//        
-//        NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
-//        
-//        if (selectArr.count > 0) {
-//            NSString *showedString = [NSString stringWithFormat:@"确定 (%ld)",selectArr.count];
-//            self.confirmButton.title = showedString;
-//            self.confirmButton.enabled = YES;
-//            self.previewButton.enabled = YES;
-//        }else{
-//            NSString *showedString = [NSString stringWithFormat:@"确定"];
-//            self.confirmButton.enabled = NO;
-//            self.confirmButton.title = showedString;
-//            self.previewButton.enabled = NO;
-//        }
-//        
-//        
-//    };
     
     return cell;
 }
@@ -303,26 +307,36 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    INImageDetailViewController *detail = [[INImageDetailViewController alloc] init];
-    detail.selectedIndexPath = indexPath;
-    detail.reloadedBlock = ^(NSArray *reloadedIndexPaths){
-        [collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
-        NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
-        
-        if (selectArr.count > 0) {
-            NSString *showedString = [NSString stringWithFormat:@"确定 (%ld)",selectArr.count];
-            self.confirmButton.title = showedString;
-            self.confirmButton.enabled = YES;
-            self.previewButton.enabled = YES;
-        }else{
-            NSString *showedString = [NSString stringWithFormat:@"确定"];
-            self.confirmButton.enabled = NO;
-            self.confirmButton.title = showedString;
-            self.previewButton.enabled = NO;
-        }
-    };
+    INImagePickerController *picker = (INImagePickerController *)self.navigationController;
     
-    [self.navigationController pushViewController:detail animated:YES];
+    if (picker.edit) {
+        INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
+        self.editSelectedAsset = asset;
+        [self sendToEditView];
+    }else{
+        INImageDetailViewController *detail = [[INImageDetailViewController alloc] init];
+        detail.selectedIndexPath = indexPath;
+        detail.reloadedBlock = ^(NSArray *reloadedIndexPaths){
+            [collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
+            NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
+            
+            if (selectArr.count > 0) {
+                NSString *showedString = [NSString stringWithFormat:@"确定 (%ld)",selectArr.count];
+                self.confirmButton.title = showedString;
+                self.confirmButton.enabled = YES;
+                self.previewButton.enabled = YES;
+            }else{
+                NSString *showedString = [NSString stringWithFormat:@"确定"];
+                self.confirmButton.enabled = NO;
+                self.confirmButton.title = showedString;
+                self.previewButton.enabled = NO;
+            }
+        };
+        
+        [self.navigationController pushViewController:detail animated:YES];
+    }
+    
+    
     
 }
 
@@ -357,7 +371,6 @@
 -(INAlbumSelectTitle *)albumTitle{
     if (_albumTitle == nil) {
         _albumTitle = [[INAlbumSelectTitle alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-//        _albumTitle.title = @"相机胶卷";
         [_albumTitle addTarget:self action:@selector(clickAction:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _albumTitle;

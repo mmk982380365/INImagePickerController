@@ -56,6 +56,8 @@
 		CB13323E1D7EC36D00B99F04 /* picker_unselected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CB1332361D7EC36D00B99F04 /* picker_unselected@3x.png */; };
 		CB7874881DAB9A9D00C15411 /* INImageEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CB7874861DAB9A9D00C15411 /* INImageEditViewController.h */; };
 		CB7874891DAB9A9D00C15411 /* INImageEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7874871DAB9A9D00C15411 /* INImageEditViewController.m */; };
+		CB7874911DABA51C00C15411 /* INImageBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CB78748F1DABA51C00C15411 /* INImageBorderView.h */; };
+		CB7874921DABA51C00C15411 /* INImageBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7874901DABA51C00C15411 /* INImageBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +126,8 @@
 		CB1332361D7EC36D00B99F04 /* picker_unselected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_unselected@3x.png"; sourceTree = "<group>"; };
 		CB7874861DAB9A9D00C15411 /* INImageEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageEditViewController.h; sourceTree = "<group>"; };
 		CB7874871DAB9A9D00C15411 /* INImageEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageEditViewController.m; sourceTree = "<group>"; };
+		CB78748F1DABA51C00C15411 /* INImageBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageBorderView.h; sourceTree = "<group>"; };
+		CB7874901DABA51C00C15411 /* INImageBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +243,8 @@
 				CB1331641D7EBCF700B99F04 /* INAlbumSelectTitle.m */,
 				CB1331651D7EBCF700B99F04 /* INImageDetailCell.h */,
 				CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */,
+				CB78748F1DABA51C00C15411 /* INImageBorderView.h */,
+				CB7874901DABA51C00C15411 /* INImageBorderView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,6 +274,7 @@
 			files = (
 				CB1331781D7EBD3800B99F04 /* INImagePickerController.h in Headers */,
 				CB13317C1D7EBD3900B99F04 /* INImageManager.h in Headers */,
+				CB7874911DABA51C00C15411 /* INImageBorderView.h in Headers */,
 				CB7874881DAB9A9D00C15411 /* INImageEditViewController.h in Headers */,
 				CB1331761D7EBD3800B99F04 /* INImageDetailViewController.h in Headers */,
 				CB1331771D7EBD3800B99F04 /* INImageListViewController.h in Headers */,
@@ -423,6 +430,7 @@
 				CB13316C1D7EBCF700B99F04 /* INImageAsset.m in Sources */,
 				CB13316D1D7EBCF700B99F04 /* INImageManager.m in Sources */,
 				CB1331701D7EBCF700B99F04 /* INAlbumSelectTitle.m in Sources */,
+				CB7874921DABA51C00C15411 /* INImageBorderView.m in Sources */,
 				CB13316A1D7EBCF700B99F04 /* INPickerBaseViewController.m in Sources */,
 				CB1331681D7EBCF700B99F04 /* INImageListViewController.m in Sources */,
 			);

@@ -13,6 +13,8 @@
 #import "INAlbum.h"
 #import "INImageAsset.h"
 
+#define MarginOfCell 30
+
 @interface INImageDetailViewController () <UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
@@ -28,6 +30,8 @@
 @property (nonatomic, strong) UIBarButtonItem *confirmButton;
 
 @property (nonatomic, assign) BOOL canHideStatusBar;
+
+@property (nonatomic, assign) BOOL hideStatusBar;
 
 @end
 
@@ -53,11 +57,14 @@
     
     if (self.selectedIndexPath) {
         [self.collectionView selectItemAtIndexPath:self.selectedIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionCenteredHorizontally];
+        INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[self.selectedIndexPath.item];
+        self.currentAsset = asset;
     }
     
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *fix = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     self.toolbarItems = @[flex,self.confirmButton,fix];
+    
     NSArray *selectArr = [(INImagePickerController *)self.navigationController manager].selectedArray;
     
     if (selectArr.count > 0) {
@@ -82,6 +89,13 @@
 }
 
 -(void)clickAction:(id)sender{
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1)];
+    animation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1, 1, 1)];
+    animation.duration = 0.2;
+    [self.rightBtn.layer addAnimation:animation forKey:@"s"];
+    
     [[(INImagePickerController *)self.navigationController manager] selectImage:self.currentAsset result:^(NSArray *reloadedIndexPaths) {
         self.rightBtn.selected = self.currentAsset.selected;
         [self.rightBtn setTitle:[NSString stringWithFormat:@"%ld",self.currentAsset.num] forState:UIControlStateSelected];
@@ -113,14 +127,42 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     INImageDetailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
+    cell.pickerController = (INImagePickerController *)self.navigationController;
+    
     INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
     
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.networkAccessAllowed = YES;
-    option.synchronous = YES;
-    [[PHImageManager defaultManager] requestImageForAsset:asset.imageAsset targetSize:CGSizeMake(Screen_Width, Screen_Height) contentMode:PHImageContentModeAspectFit options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        cell.image = result;
-    }];
+    cell.imageAsset = asset;
+    
+    
+    __weak typeof(self) ws = self;
+    cell.singleClickAct = ^(){
+        //隐藏状态栏要修改
+        if (ws.navigationController.navigationBarHidden == NO) {
+            if (ws.canHideStatusBar) {
+                
+                ws.hideStatusBar = YES;
+                
+                [ws setNeedsStatusBarAppearanceUpdate];
+                
+            }
+            
+            
+            [ws.navigationController setNavigationBarHidden:YES animated:YES];
+            [ws.navigationController setToolbarHidden:YES animated:YES];
+            
+        }else{
+            if (ws.canHideStatusBar) {
+                ws.hideStatusBar = NO;
+                [ws setNeedsStatusBarAppearanceUpdate];
+            }
+            
+            
+            [ws.navigationController setNavigationBarHidden:NO animated:YES];
+            [ws.navigationController setToolbarHidden:NO animated:YES];
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPickerUpdateStringNotification object:nil];
+    };
     
     return cell;
 }
@@ -129,47 +171,61 @@
     return [(INImagePickerController *)self.navigationController manager].showedArray.count;
 }
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    //隐藏状态栏要修改
-    if (self.navigationController.navigationBarHidden == NO) {
-        if (self.canHideStatusBar) {
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        }
-        
-        
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        [self.navigationController setToolbarHidden:YES animated:YES];
-        
-    }else{
-        if (self.canHideStatusBar) {
-            [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-        }
-        
-        
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [self.navigationController setToolbarHidden:NO animated:YES];
-    }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kPickerUpdateStringNotification object:nil];
-    
-    
-}
+//-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+//    CGPoint point = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+//    
+//    int pages = round(point.x / (Screen_Width + self.layout.minimumLineSpacing));
+//    
+//    NSLog(@"vec : %f",velocity.x);
+//    
+//    point.x = pages * (Screen_Width + self.layout.minimumLineSpacing);
+//    
+//    targetContentOffset->x = point.x;
+//    
+//}
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSInteger pages = round(scrollView.contentOffset.x / Screen_Width);
+    NSInteger pages = round(scrollView.contentOffset.x / (Screen_Width + self.layout.minimumLineSpacing));
     if (pages < 0) {
         pages = 0;
     }else if (pages > [(INImagePickerController *)self.navigationController manager].showedArray.count - 1){
         pages = [(INImagePickerController *)self.navigationController manager].showedArray.count - 1;
     }
-    NSLog(@"sadas %ld",pages);
+//    NSLog(@"sadas %ld",pages);
     
     INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[pages];
     if (asset != self.currentAsset) {
         self.currentAsset = asset;
     }
     
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+//    NSLog(@"%s",__func__);
+//    
+//    if (scrollView == self.collectionView) {
+//        NSInteger pages = round(scrollView.contentOffset.x / (Screen_Width + self.layout.minimumLineSpacing));
+//        if (pages < 0) {
+//            pages = 0;
+//        }else if (pages > [(INImagePickerController *)self.navigationController manager].showedArray.count - 1){
+//            pages = [(INImagePickerController *)self.navigationController manager].showedArray.count - 1;
+//        }
+//        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:pages inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+//    }
+    
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSLog(@"%s",__func__);
+    
+}
+
+-(BOOL)prefersStatusBarHidden{
+    return self.hideStatusBar;
+}
+
+-(UIStatusBarAnimation)preferredStatusBarUpdateAnimation{
+    return UIStatusBarAnimationFade;
 }
 
 #pragma mark - setter
@@ -185,21 +241,21 @@
 -(UICollectionViewFlowLayout *)layout{
     if (_layout == nil) {
         _layout = [[UICollectionViewFlowLayout alloc] init];
-//        float naviHeight = self.navigationController.navigationBar.height + [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.toolbar.height;
-        _layout.itemSize = CGSizeMake(Screen_Width, Screen_Height);
+        _layout.itemSize = self.view.bounds.size;
         _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _layout.minimumInteritemSpacing = 0;
-        _layout.minimumLineSpacing = 0;
-        _layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        _layout.minimumLineSpacing = MarginOfCell;
+        _layout.sectionInset = UIEdgeInsetsMake(0, MarginOfCell/2, 0, MarginOfCell/2);
     }
     return _layout;
 }
 
 -(UICollectionView *)collectionView{
     if (_collectionView == nil) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(-MarginOfCell/2, 0, Screen_Width + MarginOfCell, Screen_Height) collectionViewLayout:self.layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.decelerationRate = 0;
         _collectionView.pagingEnabled = YES;
         [_collectionView registerClass:[INImageDetailCell class] forCellWithReuseIdentifier:@"cellId"];
     }

@@ -30,6 +30,10 @@ extern NSString * const INImagePickerControllerOriginalImage;
  *  图片定位信息
  */
 extern NSString * const INImagePickerControllerLocation;
+/**
+ *  编辑后的图片
+ */
+extern NSString *const INImagePickerControllerEditedImage;
 
 /**
  *  图片选择器的代理

@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Photos/Photos.h>
+#import <UIKit/UIKit.h>
 
 @class INImageAsset;
 @class INAlbum;
+
+typedef NS_ENUM(NSInteger,INImagePickerResizeMode) {
+    INImagePickerResizeModeNone,
+    INImagePickerResizeModeFast,
+    INImagePickerResizeModeExact,
+};
 
 typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
@@ -22,7 +28,7 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 @property (nonatomic, strong) NSMutableArray *showedArray;
 
--(void)loadImagesWithAlbums:(PHAssetCollection *)album result:(void (^)())resultBlock;
+-(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)())resultBlock;
 
 -(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result;
 
@@ -34,6 +40,12 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 @property (nonatomic, assign) BOOL onlyLocations;
 
+@property (nonatomic, assign,class) CGSize maxImageSize;
+
 -(void)requestSelectedImages:(void (^)(NSArray *resultArray))resultBlock;
+
+-(void)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *result))completion;
+
+-(void)requestEditedImageWithAsset:(INImageAsset *)asset clipRect:(CGRect)rect result:(void (^)(NSArray *resultArray))resultBlock;
 
 @end
