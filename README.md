@@ -8,7 +8,7 @@
 
 * edit **截取图片 正方形区域**
 
-`
+
 @protocol INImagePickerControllerDelegate <NSObject>
 /**
  *  选中图片后的回调 
@@ -27,4 +27,3 @@
 - (void)INImagePickerControllerDidCancel:(INImagePickerController *)picker;
 
 @end
-`
