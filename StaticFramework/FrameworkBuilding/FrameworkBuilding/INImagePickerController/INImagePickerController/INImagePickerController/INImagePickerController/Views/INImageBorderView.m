@@ -21,11 +21,33 @@
 -(void)drawRect:(CGRect)rect{
     
     CGPoint center = CGPointMake(rect.size.width * 0.5, rect.size.height * 0.5);
+
+    CGContextRef context1 = UIGraphicsGetCurrentContext();
+    CGContextAddRect(context1, CGRectMake(0, 0, rect.size.width, center.y - rect.size.width * 0.5));
     
-    rect.origin.x += 1;
-    rect.origin.y += 1;
-    rect.size.width -= 2;
-    rect.size.height -= 2;
+    [[[UIColor grayColor] colorWithAlphaComponent:0.6] setFill];
+    CGContextClosePath(context1);
+    
+    CGContextDrawPath(context1, kCGPathFill);
+    
+    
+    CGContextRef context2 = UIGraphicsGetCurrentContext();
+    CGContextAddRect(context2, CGRectMake(0, center.y + rect.size.width * 0.5, rect.size.width, center.y - rect.size.width * 0.5 + 1));
+    
+    [[[UIColor grayColor] colorWithAlphaComponent:0.6] setFill];
+    CGContextClosePath(context2);
+    
+    CGContextDrawPath(context2, kCGPathFill);
+    
+    
+    
+    rect.size.height = rect.size.width;
+    rect.origin.y = center.y - rect.size.width * 0.5;
+    
+//    rect.origin.x += 1;
+//    rect.origin.y += 1;
+//    rect.size.width -= 2;
+//    rect.size.height -= 2;
     
     float radius = rect.size.width * 0.5;
     
@@ -141,14 +163,22 @@
         CGContextClosePath(context);
         //        cgcontextset
         
-        [[[UIColor whiteColor] colorWithAlphaComponent:0.8] setStroke];
+        [[[UIColor grayColor] colorWithAlphaComponent:0.6] setStroke];
         [[[UIColor grayColor] colorWithAlphaComponent:0.6] setFill];
         
         
         //        CGContextStrokePath(context);
         //        CGContextFillPath(context);
-        CGContextDrawPath(context, kCGPathFillStroke);
+        CGContextDrawPath(context, kCGPathFill);
         
+        CGContextAddArc(context, center.x, center.y, center.x - 1, 0, M_PI * 2, 1);
+        
+        CGContextClosePath(context);
+        //        cgcontextset
+        
+        [[[UIColor whiteColor] colorWithAlphaComponent:0.8] setStroke];
+        CGContextDrawPath(context, kCGPathStroke);
+    
     }
     
     

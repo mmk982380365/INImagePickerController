@@ -23,4 +23,6 @@ static NSString * const kPickerUpdateStringNotification = @"kPickerUpdateStringN
 
 @property (nonatomic, strong) INImagePickerController *pickerController;
 
+@property (nonatomic, assign) int requestID;
+
 @end

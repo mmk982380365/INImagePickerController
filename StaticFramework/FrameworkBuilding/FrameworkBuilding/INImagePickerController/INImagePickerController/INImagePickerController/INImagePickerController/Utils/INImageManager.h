@@ -8,7 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#ifdef __IPHONE_8_0
 
+#import <Photos/Photos.h>
+
+#else
+
+#import <AssetsLibrary/AssetsLibrary.h>
+
+#endif
+
+#import <AssetsLibrary/AssetsLibrary.h>
 @class INImageAsset;
 @class INAlbum;
 
@@ -23,6 +33,8 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 @interface INImageManager : NSObject
 
 @property (nonatomic, strong) NSMutableArray *albumArray;
+
++(void)requestAuthorization:(void (^)(PHAuthorizationStatus status))block;
 
 -(void)fetchAlbums:(void (^)())result;
 
@@ -44,8 +56,10 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 -(void)requestSelectedImages:(void (^)(NSArray *resultArray))resultBlock;
 
--(void)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *result))completion;
+-(int)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *result,INImageAsset *ass))completion;
 
 -(void)requestEditedImageWithAsset:(INImageAsset *)asset clipRect:(CGRect)rect result:(void (^)(NSArray *resultArray))resultBlock;
+
+-(void)cancelRequestWithRequestID:(int)requestID;
 
 @end

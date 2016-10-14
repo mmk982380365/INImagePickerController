@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "INImageAsset.h"
 
 static NSString * const kINAlbumSelectCellClickNotification = @"kINAlbumSelectCellClickNotification";
 
@@ -23,5 +24,11 @@ typedef void(^AlbumSelectCellClickBlock)(NSIndexPath *indexPath);
 @property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic, copy) AlbumSelectCellClickBlock clickBlock;
+
+@property (nonatomic, assign) int requestID;
+
+@property (nonatomic, strong) INImageAsset *asset;
+
+@property (nonatomic, assign) BOOL hideSelected;
 
 @end

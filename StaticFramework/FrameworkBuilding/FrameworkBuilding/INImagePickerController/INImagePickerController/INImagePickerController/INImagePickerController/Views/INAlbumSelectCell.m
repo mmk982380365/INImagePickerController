@@ -60,6 +60,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kINAlbumSelectCellClickNotification object:self.indexPath];
 }
 
+-(void)setHideSelected:(BOOL)hideSelected{
+    _hideSelected = hideSelected;
+    self.clickButton.hidden = hideSelected;
+}
+
 -(void)setClicked:(BOOL)clicked{
     _clicked = clicked;
     self.clickButton.selected = clicked;

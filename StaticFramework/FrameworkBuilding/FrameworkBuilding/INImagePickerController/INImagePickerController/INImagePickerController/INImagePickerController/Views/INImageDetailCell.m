@@ -111,15 +111,22 @@
     self.imageView.image = nil;
     if (imageAsset) {
         _imageAsset = imageAsset;
-        float imageHeight = 1.8 * Screen_Width * (imageAsset.imageHeight / imageAsset.imageWidth);
+        float imageHeight = 1.5 * Screen_Width * (imageAsset.imageHeight / imageAsset.imageWidth);
         
         
         CGRect imageFrame = CGRectMake(0, (Screen_Height - imageHeight) * 0.5, Screen_Width, imageHeight);
         
         __weak typeof(self) ws = self;
         
-        [self.pickerController.manager requestImageForAsset:imageAsset size:imageFrame.size resizeMode:INImagePickerResizeModeNone completion:^(UIImage *result) {
-            ws.image = result;
+        [self.pickerController.manager cancelRequestWithRequestID:self.requestID];
+        self.image = nil;
+        self.requestID = [self.pickerController.manager requestImageForAsset:imageAsset size:imageFrame.size resizeMode:INImagePickerResizeModeNone completion:^(UIImage *result,INImageAsset *oldAsset) {
+            if (result) {
+                if (oldAsset == imageAsset) {
+                    ws.image = result;
+                }
+                
+            }
         }];
         
         

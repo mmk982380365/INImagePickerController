@@ -58,7 +58,7 @@
     INImagePickerController *picker = (INImagePickerController *)self.navigationController;
     INImageManager *manager = picker.manager;
     
-    [manager requestImageForAsset:self.asset size:[INImageManager maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result) {
+    [manager requestImageForAsset:self.asset size:[INImageManager maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result,INImageAsset *oldAsset) {
         
 //        self.originalImage = result;
         self.imageView.image = result;
@@ -87,7 +87,12 @@
     
     self.confirmButton.enabled = NO;
     
-    CGRect theRect = [self.borderView convertRect:self.borderView.bounds toView:self.imageView];
+    CGRect targetRect;
+    targetRect.origin.x = 0;
+    targetRect.origin.y = self.borderView.center.y - self.borderView.frame.size.width * 0.5;
+    targetRect.size = CGSizeMake(self.borderView.frame.size.width, self.borderView.frame.size.width);
+    
+    CGRect theRect = [self.borderView convertRect:targetRect toView:self.imageView];
     
     
     
@@ -170,7 +175,13 @@
         _scrollView.canCancelContentTouches = YES;
         _scrollView.alwaysBounceVertical = NO;
         _scrollView.delegate = self;
-        _scrollView.contentInset = UIEdgeInsetsMake(self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0, self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0);
+        
+        CGRect targetRect;
+        targetRect.origin.x = 0;
+        targetRect.origin.y = self.borderView.center.y - self.borderView.frame.size.width * 0.5;
+        targetRect.size = CGSizeMake(self.borderView.frame.size.width, self.borderView.frame.size.width);
+        
+        _scrollView.contentInset = UIEdgeInsetsMake(targetRect.origin.y - self.navigationController.navigationBar.frame.size.height, 0, targetRect.origin.y - self.navigationController.navigationBar.frame.size.height, 0);
     }
     return _scrollView;
 }
@@ -192,7 +203,7 @@
 
 -(INImageBorderView *)borderView{
     if (_borderView == nil) {
-        _borderView = [[INImageBorderView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width)];
+        _borderView = [[INImageBorderView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
         _borderView.center = CGPointMake(_borderView.center.x, self.view.center.y);
         _borderView.userInteractionEnabled = NO;
     }

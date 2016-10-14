@@ -77,11 +77,19 @@
     
     
     
+    [self selectFirstAlbum];
+    
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellClicked:) name:kINAlbumSelectCellClickNotification object:nil];
+    
+}
+
+-(void)selectFirstAlbum{
     //默认显示相机胶卷  无数据则显示第一个相册
     BOOL isFind = NO;
     INAlbum *collection = nil;
     for (INAlbum *album in [(INImagePickerController *)self.navigationController manager].albumArray) {
-        if ([album.title isEqualToString:@"相机胶卷"]) {
+        if ([album.title isEqualToString:@"所有照片"]) {
             isFind = YES;
             collection = album;
             break;
@@ -93,10 +101,6 @@
     //设置标题
     self.albumTitle.title = collection.title;
     [self loadAlbums:collection];
-    
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellClicked:) name:kINAlbumSelectCellClickNotification object:nil];
-    
 }
 
 -(void)sendToEditView{
@@ -137,8 +141,10 @@
 #pragma mark - data
 
 -(void)reloadData{
-    [self.albumTableView reloadData];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.albumTableView reloadData];
+        [self selectFirstAlbum];
+    });
 }
 /**
  *  选取相册
@@ -163,7 +169,7 @@
 #pragma mark - btnAction
 //取消选择
 -(void)cancelSelect:(id)sender{
-//    NSLog(@"取消");
+    //    NSLog(@"取消");
     if ([(INImagePickerController *)self.navigationController delegate] && [[(INImagePickerController *)self.navigationController delegate] conformsToProtocol:@protocol(INImagePickerControllerDelegate)] && [[(INImagePickerController *)self.navigationController delegate] respondsToSelector:@selector(INImagePickerControllerDidCancel:)]) {
         [[(INImagePickerController *)self.navigationController delegate] INImagePickerControllerDidCancel:(INImagePickerController *)self.navigationController];
         
@@ -172,7 +178,7 @@
 }
 //预览按钮
 -(void)previewPhotos:(id)sender{
-//    NSLog(@"预览");
+    //    NSLog(@"预览");
     INImageDetailViewController *detail = [[INImageDetailViewController alloc] init];
     //进入后显示选中的图片
     if ([(INImagePickerController *)self.navigationController manager].selectedArray.count > 0) {
@@ -201,7 +207,7 @@
 }
 //确认事件
 -(void)confirmToSelect:(id)sender{
-//    NSLog(@"确认");
+    //    NSLog(@"确认");
     //请求选中的图片回送给调用的对象
     
     INImagePickerController *picker = (INImagePickerController *)self.navigationController;
@@ -256,10 +262,10 @@
     
     cell.albumName = collection.title;
     
-
+    
     cell.albumImageCount = collection.countOfImage;
-
-
+    
+    
     cell.albumImage = collection.thumbnail;
     
     return cell;
@@ -286,9 +292,14 @@
     INAlbumSelectCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
     
+    
+    if ([(INImagePickerController *)self.navigationController edit]) {
+        cell.hideSelected = YES;
+    }
     INImageAsset *asset = [(INImagePickerController *)self.navigationController manager].showedArray[indexPath.item];
     
-    [[(INImagePickerController *)self.navigationController manager] requestImageForAsset:asset size:CGSizeMake(200, 200) resizeMode:INImagePickerResizeModeNone completion:^(UIImage *result) {
+    cell.requestID = [[(INImagePickerController *)self.navigationController manager] requestImageForAsset:asset size:CGSizeMake(200, 200) resizeMode:INImagePickerResizeModeNone completion:^(UIImage *result,INImageAsset *oldAsset) {
+        
         cell.image = result;
     }];
     

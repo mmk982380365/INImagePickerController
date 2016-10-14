@@ -8,17 +8,7 @@
 
 #import "INImageManager.h"
 
-#ifdef __IPHONE_8_0
 
-#import <Photos/Photos.h>
-
-#else
-
-#import <AssetsLibrary/AssetsLibrary.h>
-
-#endif
-
-#import <AssetsLibrary/AssetsLibrary.h>
 
 
 
@@ -37,6 +27,7 @@
 @end
 
 @implementation INImageManager
+
 - (void)dealloc
 {
 #ifdef DEBUG
@@ -80,6 +71,12 @@
 //        isIos7 = YES;
 //    }
 //}
+
++(void)requestAuthorization:(void (^)(PHAuthorizationStatus))block{
+    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+        [PHPhotoLibrary requestAuthorization:block];
+    }
+}
 
 -(void)fetchAlbums:(void (^)())result{
  
@@ -477,15 +474,23 @@
     resultArray = nil;
 }
 
--(void)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *))completion{
+-(void)cancelRequestWithRequestID:(int)requestID{
+    if (requestID != 0) {
+        [[PHImageManager defaultManager] cancelImageRequest:requestID];
+    }
+}
+
+-(int)requestImageForAsset:(INImageAsset *)asset size:(CGSize)size resizeMode:(INImagePickerResizeMode)resizeMode completion:(void (^)(UIImage *, INImageAsset *))completion{
+    int requestID = 0;
     if ([asset.imageAsset isKindOfClass:[PHAsset class]]) {
         
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         options.resizeMode = (PHImageRequestOptionsResizeMode)resizeMode;
         options.networkAccessAllowed = YES;
-        [[PHCachingImageManager defaultManager] requestImageForAsset:asset.imageAsset targetSize:size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        requestID = [[PHCachingImageManager defaultManager] requestImageForAsset:asset.imageAsset targetSize:size contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            NSLog(@"%@",info);
             if (completion) {
-                completion(result);
+                completion(result,asset);
             }
         }];
         
@@ -518,7 +523,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (completion) {
-                    completion(image);
+                    completion(image,asset);
                 }
             });
             
@@ -527,13 +532,16 @@
 
 //#endif
     }
+    
+    
+    return requestID;
 }
 
 -(void)requestEditedImageWithAsset:(INImageAsset *)asset clipRect:(CGRect)rect result:(void (^)(NSArray *))resultBlock{
     
     NSLog(@"%@",NSStringFromCGRect(rect));
     
-    [self requestImageForAsset:asset size:[[self class] maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result) {
+    [self requestImageForAsset:asset size:[[self class] maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result,INImageAsset *oldAsset) {
         
         CGImageRef imgRef = result.CGImage;
         CGImageRef newRef = CGImageCreateWithImageInRect(imgRef, rect);
@@ -566,6 +574,10 @@
 
 +(CGSize)maxImageSize{
     return PHImageManagerMaximumSize;
+}
+
++(void)setMaxImageSize:(CGSize)maxImageSize{
+    
 }
 
 @end
