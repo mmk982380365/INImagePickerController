@@ -44,6 +44,12 @@
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.borderView];
     
+    if (@available(iOS 11.0, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapAction:)];
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapAction:)];
@@ -60,7 +66,7 @@
     
     [manager requestImageForAsset:self.asset size:[INImageManager maxImageSize] resizeMode:INImagePickerResizeModeExact completion:^(UIImage *result) {
         
-//        self.originalImage = result;
+        //计算位置 宽度
         self.imageView.image = result;
         
         if (result.size.width > result.size.height) {
@@ -87,7 +93,7 @@
     
     self.confirmButton.enabled = NO;
     
-    CGRect theRect = [self.borderView convertRect:self.borderView.bounds toView:self.imageView];
+    CGRect theRect = [self.borderView convertRect:self.borderView.cropRect toView:self.imageView];
     
     
     
@@ -116,17 +122,7 @@
 }
 
 -(void)singleTapAction:(UIGestureRecognizer *)recognizer{
-//    if (self.navigationController.navigationBarHidden == NO) {
-//        
-//        [self.navigationController setNavigationBarHidden:YES animated:YES];
-//        [self.navigationController setToolbarHidden:YES animated:YES];
-//        self.scrollView.contentInset = UIEdgeInsetsMake(self.borderView.frame.origin.y, 0, self.borderView.frame.origin.y, 0);
-//    }else{
-//        self.scrollView.contentInset = UIEdgeInsetsMake(self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0, self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0);
-//        [self.navigationController setNavigationBarHidden:NO animated:YES];
-//        [self.navigationController setToolbarHidden:NO animated:YES];
-//        
-//    }
+    
 }
 
 -(void)doubleTapAction:(UIGestureRecognizer *)recognizer{
@@ -170,7 +166,7 @@
         _scrollView.canCancelContentTouches = YES;
         _scrollView.alwaysBounceVertical = NO;
         _scrollView.delegate = self;
-        _scrollView.contentInset = UIEdgeInsetsMake(self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0, self.borderView.frame.origin.y - self.navigationController.navigationBar.frame.size.height, 0);
+        _scrollView.contentInset = UIEdgeInsetsMake(self.borderView.frame.origin.y + self.borderView.cropRect.origin.y, 0, ([UIScreen mainScreen].bounds.size.height - CGRectGetMinY(self.navigationController.toolbar.frame)) + self.borderView.cropRect.origin.y, 0);
     }
     return _scrollView;
 }
@@ -192,8 +188,7 @@
 
 -(INImageBorderView *)borderView{
     if (_borderView == nil) {
-        _borderView = [[INImageBorderView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width)];
-        _borderView.center = CGPointMake(_borderView.center.x, self.view.center.y);
+        _borderView = [[INImageBorderView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height, [UIScreen mainScreen].bounds.size.width, CGRectGetMinY(self.navigationController.toolbar.frame) - self.navigationController.navigationBar.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height)];
         _borderView.userInteractionEnabled = NO;
     }
     return _borderView;

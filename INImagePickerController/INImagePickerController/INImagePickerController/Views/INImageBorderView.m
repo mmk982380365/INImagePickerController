@@ -8,167 +8,90 @@
 
 #import "INImageBorderView.h"
 
+@interface INImageBorderView () <CALayerDelegate>
+
+@end
+
 @implementation INImageBorderView
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        
+        self.cropRect = CGRectMake(0, (self.frame.size.height - self.frame.size.width) / 2.0, self.frame.size.width, self.frame.size.width);
+        
+        CALayer *bgLayer = [CALayer layer];
+        bgLayer.frame = self.bounds;
+        bgLayer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+        bgLayer.contentsScale = [UIScreen mainScreen].scale;
+        [self.layer addSublayer:bgLayer];
+        
+        CAShapeLayer *borderLayer = [CAShapeLayer layer];
+        borderLayer.frame = self.cropRect;
+        borderLayer.strokeColor = [UIColor whiteColor].CGColor;
+        borderLayer.fillColor = [UIColor clearColor].CGColor;
+        borderLayer.path = [self borderPathWithRect:borderLayer.bounds];
+        borderLayer.lineWidth = 3;
+        [self.layer addSublayer:borderLayer];
+        
+        CAShapeLayer *lineLayer = [CAShapeLayer layer];
+        lineLayer.frame = self.cropRect;
+        lineLayer.strokeColor = [UIColor whiteColor].CGColor;
+        lineLayer.fillColor = [UIColor clearColor].CGColor;
+        lineLayer.path = [self linePathWithRect:lineLayer.bounds];
+        lineLayer.lineWidth = 1;
+        [self.layer addSublayer:lineLayer];
+        
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame = self.bounds;
+        maskLayer.contentsScale = [UIScreen mainScreen].scale;
+        maskLayer.fillColor = [UIColor blackColor].CGColor;
+        maskLayer.fillRule = kCAFillRuleEvenOdd;
+        
+        UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.bounds];
+//        UIBezierPath *cloudPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0) radius:self.bounds.size.width / 2.0 startAngle:0 endAngle:M_PI * 2 clockwise:0];
+//        [path appendPath:cloudPath];
+        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:self.cropRect];
+        [path appendPath:rectPath];
+        
+        [path addClip];
+        maskLayer.path = path.CGPath;
+        
+        bgLayer.mask = maskLayer;
+        
     }
     return self;
 }
 
--(void)drawRect:(CGRect)rect{
+- (CGPathRef)borderPathWithRect:(CGRect)rect {
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:rect];
     
-    CGPoint center = CGPointMake(rect.size.width * 0.5, rect.size.height * 0.5);
     
-    rect.origin.x += 1;
-    rect.origin.y += 1;
-    rect.size.width -= 2;
-    rect.size.height -= 2;
+    return bezierPath.CGPath;
+}
+
+- (CGPathRef)linePathWithRect:(CGRect)rect {
+    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     
-    float radius = rect.size.width * 0.5;
-    
-    for (int i = 0; i < 4; i++) {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 2);
-        
-        
-        
-        //        CGContextSetStrokeColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.8].CGColor);
-        //        CGContextSetFillColorWithColor(context, [[UIColor redColor] colorWithAlphaComponent:0.9].CGColor);
-        //
-        CGMutablePathRef path = CGPathCreateMutable();
-        //        CGMutablePathRef path2 = CGPathCreateMutable();
-        
-        CGContextBeginPath(context);
-        
-        CGRect fillRect;
-        
-        switch (i) {
-            case 0:
-            {
-                
-                CGPathAddArc(path, NULL, center.x, center.y, rect.size.width * 0.5, M_PI_2 * 3, M_PI_2 * 2, 1);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x, rect.origin.y + radius);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x, rect.origin.y);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius, rect.origin.y);
-                
-                
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius, rect.origin.y);
-                
-                //                CGPathMoveToPoint(path, NULL, center.x, center.y);
-                
-                
-                fillRect = CGRectMake(rect.origin.x, rect.origin.y, radius, radius);
-                
-            }
-                break;
-            case 1:
-            {
-                
-                CGPathAddArc(path, NULL, center.x, center.y, rect.size.width * 0.5, M_PI_2 * 4, M_PI_2 * 3, 1);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius, rect.origin.y);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y + radius);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y + radius);
-                
-                //                CGPathMoveToPoint(path, NULL, center.x, center.y);
-                
-                
-                fillRect = CGRectMake(rect.origin.x + radius, rect.origin.y, radius, radius);
-                
-            }
-                break;
-            case 2:
-            {
-                
-                CGPathAddArc(path, NULL, center.x, center.y, rect.size.width * 0.5, M_PI_2 * 1, M_PI_2 * 2, 0);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x, rect.origin.y + radius);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x, rect.origin.y + radius + radius);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius, rect.origin.y + radius + radius);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius, rect.origin.y + radius + radius);
-                
-                //                CGPathMoveToPoint(path, NULL, center.x, center.y);
-                
-                
-                fillRect = CGRectMake(rect.origin.x, rect.origin.y + radius, radius, radius);
-                
-            }
-                break;
-            case 3:
-            {
-                
-                CGPathAddArc(path, NULL, center.x, center.y, rect.size.width * 0.5, M_PI_2 * 0, M_PI_2 * 1, 0);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius, rect.origin.y + radius + radius);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y + radius + radius);
-                CGPathAddLineToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y + radius);
-                
-                CGPathMoveToPoint(path, NULL, rect.origin.x + radius + radius, rect.origin.y + radius);
-                
-                //                CGPathMoveToPoint(path, NULL, center.x, center.y);
-                
-                
-                fillRect = CGRectMake(rect.origin.x + radius, rect.origin.y + radius, radius, radius);
-                
-            }
-                break;
-                
-            default:
-                break;
-        }
-        
-        fillRect.size.width *= 0.5;
-        fillRect.size.height *= 0.5;
-        
-        CGContextSetLineJoin(context, kCGLineJoinRound);
-        
-        CGPathCloseSubpath(path);
-        
-        //        CGPathAddPath(path, NULL, path2);
-        CGContextAddPath(context, path);
-        
-        //        CGContextSetRGBFillColor(context, 1, 1, 0, 0.8);
-        
-        //        CGContextStrokePath(context);
-        CGContextClosePath(context);
-        //        cgcontextset
-        
-        [[[UIColor whiteColor] colorWithAlphaComponent:0.8] setStroke];
-        [[[UIColor grayColor] colorWithAlphaComponent:0.6] setFill];
-        
-        
-        //        CGContextStrokePath(context);
-        //        CGContextFillPath(context);
-        CGContextDrawPath(context, kCGPathFillStroke);
-        
+    //row
+    CGFloat perWidth = rect.size.width / 3;
+    for (int i = 1; i < 3; i++) {
+        [bezierPath moveToPoint:CGPointMake(i * perWidth, CGRectGetMinY(rect))];
+        [bezierPath addLineToPoint:CGPointMake(i * perWidth, CGRectGetMaxY(rect))];
     }
     
+    CGFloat perHeight = rect.size.height / 3;
     
+    for (int i = 1; i < 3; i++) {
+        [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(rect), i * perHeight)];
+        [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(rect), i * perHeight)];
+    }
     
-    //
-    
-    //    CGContextRef context2 = UIGraphicsGetCurrentContext();
-    //
-    //    CGContextSetLineWidth(context2, 2);
-    //    CGContextSetStrokeColorWithColor(context2, [[UIColor whiteColor] colorWithAlphaComponent:0.8].CGColor);
-    //    CGContextSetFillColorWithColor(context2, [[UIColor whiteColor] colorWithAlphaComponent:0].CGColor);
-    //    
-    //    
-    //    
-    //    
-    //    CGContextAddPath(context2, path2);
-    //    CGContextStrokePath(context2);
-    //    CGContextFillRect(context2, rect);
-    
+    return bezierPath.CGPath;
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

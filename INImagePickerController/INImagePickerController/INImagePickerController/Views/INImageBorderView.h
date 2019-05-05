@@ -10,4 +10,6 @@
 
 @interface INImageBorderView : UIView
 
+@property (assign, nonatomic) CGRect cropRect;
+
 @end

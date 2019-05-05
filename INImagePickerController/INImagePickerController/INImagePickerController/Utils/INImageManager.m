@@ -382,19 +382,10 @@
             asset.selected = YES;
             [self.selectedArray addObject:asset];
         }else{
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已超过最大图片选择数量" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [alertView show];
-                });
-                
-                sleep(1);
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [alertView dismissWithClickedButtonIndex:0 animated:YES];
-                });
-                
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已超过最大图片选择数量" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [alertView show];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [alertView dismissWithClickedButtonIndex:0 animated:YES];
             });
             
         }

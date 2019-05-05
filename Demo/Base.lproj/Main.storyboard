@@ -28,13 +28,26 @@
                                     <action selector="showPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6lp-7t-zRW"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jsW-eg-Rg3">
+                                <rect key="frame" x="87" y="505" width="240" height="240"/>
+                                <color key="backgroundColor" red="1" green="0.59215686270000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jsW-eg-Rg3" secondAttribute="height" multiplier="1:1" id="jtW-HO-I0B"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="jsW-eg-Rg3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YeJ-nA-DFj"/>
+                            <constraint firstItem="jsW-eg-Rg3" firstAttribute="top" secondItem="I9p-aL-atE" secondAttribute="bottom" constant="42" id="fGU-uK-ezh"/>
+                            <constraint firstItem="jsW-eg-Rg3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="87" id="gFm-Sb-Hze"/>
                             <constraint firstItem="I9p-aL-atE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nXE-eN-gOY"/>
                             <constraint firstItem="I9p-aL-atE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="nvc-v8-G3j"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="jsW-eg-Rg3" id="nbc-dK-k3h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
