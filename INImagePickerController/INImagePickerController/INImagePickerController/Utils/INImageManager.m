@@ -37,6 +37,7 @@
 @end
 
 @implementation INImageManager
+@dynamic maxImageSize;
 - (void)dealloc
 {
 #ifdef DEBUG
@@ -81,7 +82,7 @@
 //    }
 //}
 
--(void)fetchAlbums:(void (^)())result{
+-(void)fetchAlbums:(void (^)(void))result{
  
     
     if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {
@@ -120,7 +121,7 @@
     
 }
 
--(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)())resultBlock{
+-(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)(void))resultBlock{
     @synchronized(self.showedArray) {
         
         if ([UIDevice currentDevice].systemVersion.floatValue < 8.0) {

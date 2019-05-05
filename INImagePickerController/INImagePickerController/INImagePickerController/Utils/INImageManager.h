@@ -24,11 +24,11 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 @property (nonatomic, strong) NSMutableArray *albumArray;
 
--(void)fetchAlbums:(void (^)())result;
+-(void)fetchAlbums:(void (^)(void))result;
 
 @property (nonatomic, strong) NSMutableArray *showedArray;
 
--(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)())resultBlock;
+-(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)(void))resultBlock;
 
 -(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result;
 
@@ -40,7 +40,7 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 @property (nonatomic, assign) BOOL onlyLocations;
 
-@property (nonatomic, assign,class) CGSize maxImageSize;
+@property (nonatomic, assign, class) CGSize maxImageSize;
 
 -(void)requestSelectedImages:(void (^)(NSArray *resultArray))resultBlock;
 

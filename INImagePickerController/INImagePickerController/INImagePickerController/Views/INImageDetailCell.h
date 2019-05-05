@@ -19,7 +19,7 @@ static NSString * const kPickerUpdateStringNotification = @"kPickerUpdateStringN
 
 @property (nonatomic, strong) INImageAsset *imageAsset;
 
-@property (nonatomic, copy) void(^singleClickAct)();
+@property (nonatomic, copy) void(^singleClickAct)(void);
 
 @property (nonatomic, strong) INImagePickerController *pickerController;
 
