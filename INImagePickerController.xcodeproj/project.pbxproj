@@ -27,11 +27,11 @@
 		4FE6AF75227ECC23007ECF11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6AF74227ECC23007ECF11 /* ViewController.m */; };
 		4FE6AF78227ECC23007ECF11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6AF76227ECC23007ECF11 /* Main.storyboard */; };
 		4FE6AF7A227ECC24007ECF11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6AF79227ECC24007ECF11 /* Assets.xcassets */; };
-		4FE6AF7D227ECC24007ECF11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6AF7B227ECC24007ECF11 /* LaunchScreen.storyboard */; };
 		4FE6AF80227ECC24007ECF11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6AF7F227ECC24007ECF11 /* main.m */; };
 		4FE6AF88227ECC39007ECF11 /* libINImagePickerController.a in Resources */ = {isa = PBXBuildFile; fileRef = CB1331361D7EBCD000B99F04 /* libINImagePickerController.a */; };
 		4FE6AF89227ECC39007ECF11 /* INImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CB1331FB1D7EC0C800B99F04 /* INImagePickerController.bundle */; };
 		4FE6AF8B227ECCB5007ECF11 /* libINImagePickerController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1331361D7EBCD000B99F04 /* libINImagePickerController.a */; };
+		4FE6AF8F227ED1D8007ECF11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6AF8E227ED1D8007ECF11 /* LaunchScreen.storyboard */; };
 		CB1331671D7EBCF700B99F04 /* INImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331461D7EBCF700B99F04 /* INImageDetailViewController.m */; };
 		CB1331681D7EBCF700B99F04 /* INImageListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331481D7EBCF700B99F04 /* INImageListViewController.m */; };
 		CB1331691D7EBCF700B99F04 /* INImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CB13314A1D7EBCF700B99F04 /* INImagePickerController.m */; };
@@ -43,7 +43,6 @@
 		CB13316F1D7EBCF700B99F04 /* INAlbumSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331621D7EBCF700B99F04 /* INAlbumSelectCell.m */; };
 		CB1331701D7EBCF700B99F04 /* INAlbumSelectTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331641D7EBCF700B99F04 /* INAlbumSelectTitle.m */; };
 		CB1331711D7EBCF700B99F04 /* INImageDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */; };
-		CB1331731D7EBD1000B99F04 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB1331721D7EBD1000B99F04 /* Photos.framework */; };
 		CB1331761D7EBD3800B99F04 /* INImageDetailViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331451D7EBCF700B99F04 /* INImageDetailViewController.h */; };
 		CB1331771D7EBD3800B99F04 /* INImageListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331471D7EBCF700B99F04 /* INImageListViewController.h */; };
 		CB1331781D7EBD3800B99F04 /* INImagePickerController.h in Headers */ = {isa = PBXBuildFile; fileRef = CB1331491D7EBCF700B99F04 /* INImagePickerController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -120,9 +119,9 @@
 		4FE6AF74227ECC23007ECF11 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4FE6AF77227ECC23007ECF11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4FE6AF79227ECC24007ECF11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FE6AF7C227ECC24007ECF11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FE6AF7E227ECC24007ECF11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FE6AF7F227ECC24007ECF11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4FE6AF8E227ED1D8007ECF11 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB1331361D7EBCD000B99F04 /* libINImagePickerController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libINImagePickerController.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1331451D7EBCF700B99F04 /* INImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageDetailViewController.h; sourceTree = "<group>"; };
 		CB1331461D7EBCF700B99F04 /* INImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageDetailViewController.m; sourceTree = "<group>"; };
@@ -146,7 +145,6 @@
 		CB1331641D7EBCF700B99F04 /* INAlbumSelectTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INAlbumSelectTitle.m; sourceTree = "<group>"; };
 		CB1331651D7EBCF700B99F04 /* INImageDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INImageDetailCell.h; sourceTree = "<group>"; };
 		CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INImageDetailCell.m; sourceTree = "<group>"; };
-		CB1331721D7EBD1000B99F04 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		CB1331FB1D7EC0C800B99F04 /* INImagePickerController.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = INImagePickerController.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB1331FD1D7EC0C800B99F04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB13322F1D7EC36D00B99F04 /* picker_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_down@2x.png"; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB1331731D7EBD1000B99F04 /* Photos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +196,7 @@
 				4FE6AF74227ECC23007ECF11 /* ViewController.m */,
 				4FE6AF76227ECC23007ECF11 /* Main.storyboard */,
 				4FE6AF79227ECC24007ECF11 /* Assets.xcassets */,
-				4FE6AF7B227ECC24007ECF11 /* LaunchScreen.storyboard */,
+				4FE6AF8E227ED1D8007ECF11 /* LaunchScreen.storyboard */,
 				4FE6AF7E227ECC24007ECF11 /* Info.plist */,
 				4FE6AF7F227ECC24007ECF11 /* main.m */,
 			);
@@ -216,7 +213,6 @@
 		CB13312D1D7EBCD000B99F04 = {
 			isa = PBXGroup;
 			children = (
-				CB1331721D7EBD1000B99F04 /* Photos.framework */,
 				CB1331381D7EBCD000B99F04 /* INImagePickerController */,
 				CB1331FC1D7EC0C800B99F04 /* INImagePickerControllerBundle */,
 				4FE6AF6F227ECC23007ECF11 /* Demo */,
@@ -466,8 +462,8 @@
 			files = (
 				4FE6AF88227ECC39007ECF11 /* libINImagePickerController.a in Resources */,
 				4FE6AF89227ECC39007ECF11 /* INImagePickerController.bundle in Resources */,
-				4FE6AF7D227ECC24007ECF11 /* LaunchScreen.storyboard in Resources */,
 				4FE6AF7A227ECC24007ECF11 /* Assets.xcassets in Resources */,
+				4FE6AF8F227ED1D8007ECF11 /* LaunchScreen.storyboard in Resources */,
 				4FE6AF78227ECC23007ECF11 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,14 +586,6 @@
 				4FE6AF77227ECC23007ECF11 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		4FE6AF7B227ECC24007ECF11 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FE6AF7C227ECC24007ECF11 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
