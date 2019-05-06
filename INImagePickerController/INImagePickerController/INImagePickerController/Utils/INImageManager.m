@@ -357,14 +357,16 @@
                     album.countOfImage = countOfLocations;
                     [self.albumArray addObject:album];
                 }
+                
             }
             
         }
         
+        
     }
 }
 
--(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result{
+-(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result failedCallback:(INPickerRelodedFailedBlock)failCallback {
     
     NSInteger nums = 0;
     NSMutableArray *indexPathArray = [NSMutableArray arrayWithCapacity:0];
@@ -382,11 +384,9 @@
             asset.selected = YES;
             [self.selectedArray addObject:asset];
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"已超过最大图片选择数量" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-            [alertView show];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [alertView dismissWithClickedButtonIndex:0 animated:YES];
-            });
+            if (failCallback) {
+                failCallback(@"已超过最大图片选择数量");
+            }
             
         }
     }else{

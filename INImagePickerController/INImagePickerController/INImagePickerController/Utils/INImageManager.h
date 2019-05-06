@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger,INImagePickerResizeMode) {
 };
 
 typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
+typedef void(^INPickerRelodedFailedBlock)(NSString *errorMsg);
 
 @interface INImageManager : NSObject
 
@@ -30,7 +31,7 @@ typedef void(^INPickerRelodedBlock)(NSArray *reloadedIndexPaths);
 
 -(void)loadImagesWithAlbums:(INAlbum *)album result:(void (^)(void))resultBlock;
 
--(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result;
+-(void)selectImage:(INImageAsset *)asset result:(INPickerRelodedBlock)result failedCallback:(INPickerRelodedFailedBlock)failCallback;
 
 @property (nonatomic, assign) NSInteger maxNum;
 

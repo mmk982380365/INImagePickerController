@@ -114,6 +114,15 @@
     //更改数组状态
     [[(INImagePickerController *)self.navigationController manager] selectImage:asset result:^(NSArray *reloadedIndexPaths) {
         [self.collectionView reloadItemsAtIndexPaths:reloadedIndexPaths];
+    } failedCallback:^(NSString *errorMsg) {
+        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:nil message:errorMsg preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:alertVc animated:YES completion:^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [alertVc dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+            });
+        }];
     }];
     
     
