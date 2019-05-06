@@ -8,6 +8,7 @@
 
 #import "INImagePickerController.h"
 #import "INImageListViewController.h"
+#import "INLoadingView.h"
 
 NSString * const INImagePickerControllerOriginalImage = @"INImagePickerControllerOriginalImage";
 NSString * const INImagePickerControllerLocation = @"INImagePickerControllerLocation";
@@ -17,6 +18,8 @@ NSString * const INImagePickerControllerEditedImage = @"INImagePickerControllerE
 @property (nonatomic, strong) INImageListViewController *imageListViewController;
 
 @property (nonatomic, strong, readwrite) INImageManager *manager;
+
+@property (nonatomic, strong) INLoadingView *loadingView;
 
 @end
 
@@ -55,14 +58,34 @@ NSString * const INImagePickerControllerEditedImage = @"INImagePickerControllerE
     self.toolbarHidden = NO;
     self.toolbar.barStyle = UIBarStyleBlackOpaque;
     
+    [self showLoading];
     
     __weak typeof(self) ws = self;
     //获取手机相册 完成后刷新列表
     [self.manager fetchAlbums:^{
         [ws.imageListViewController reloadData];
+        [self hideLoading];
     }];
     
 }
+
+- (void)showLoading {
+    self.loadingView = [[INLoadingView alloc] init];
+    self.loadingView.alpha = 0;
+    [self.view addSubview:self.loadingView];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.loadingView.alpha = 1;
+    }];
+}
+
+- (void)hideLoading {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.loadingView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.loadingView removeFromSuperview];
+    }];
+}
+
 #pragma mark - setter
 //设置最大选择的数量
 -(void)setMaxCount:(NSInteger)maxCount{
