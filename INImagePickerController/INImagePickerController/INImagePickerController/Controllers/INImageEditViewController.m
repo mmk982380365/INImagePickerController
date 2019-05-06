@@ -59,7 +59,6 @@
     [self.view addGestureRecognizer:doubleTap];
     
     
-    self.containerView.backgroundColor = [UIColor redColor];
     
     INImagePickerController *picker = (INImagePickerController *)self.navigationController;
     INImageManager *manager = picker.manager;

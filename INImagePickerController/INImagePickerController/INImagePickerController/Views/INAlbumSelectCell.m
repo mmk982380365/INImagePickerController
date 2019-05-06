@@ -36,7 +36,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor redColor];
         
         [self addSubview:self.imageView];
         [self addSubview:self.maskImageView];
