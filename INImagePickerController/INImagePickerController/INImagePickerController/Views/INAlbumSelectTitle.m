@@ -57,9 +57,7 @@
     
     self.arrowImageView.frame = CGRectMake(self.titleLabel.frame.origin.x + self.titleLabel.frame.size.width + 3, self.arrowImageView.frame.origin.y, self.arrowImageView.frame.size.width, self.arrowImageView.frame.size.height);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.arrowImageView.frame.size.width + self.arrowImageView.frame.origin.x, self.frame.size.height);
-    });
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.arrowImageView.frame.size.width + self.arrowImageView.frame.origin.x, self.frame.size.height);
 }
 #pragma mark - getter
 
