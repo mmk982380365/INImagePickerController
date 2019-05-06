@@ -23,6 +23,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4F2D36D7227FDB6A0014F348 /* INLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F2D36D5227FDB6A0014F348 /* INLoadingView.h */; };
+		4F2D36D8227FDB6A0014F348 /* INLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2D36D6227FDB6A0014F348 /* INLoadingView.m */; };
 		4FE6AF72227ECC23007ECF11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6AF71227ECC23007ECF11 /* AppDelegate.m */; };
 		4FE6AF75227ECC23007ECF11 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6AF74227ECC23007ECF11 /* ViewController.m */; };
 		4FE6AF78227ECC23007ECF11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE6AF76227ECC23007ECF11 /* Main.storyboard */; };
@@ -112,6 +114,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F2D36D5227FDB6A0014F348 /* INLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = INLoadingView.h; sourceTree = "<group>"; };
+		4F2D36D6227FDB6A0014F348 /* INLoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = INLoadingView.m; sourceTree = "<group>"; };
 		4FE6AF6E227ECC23007ECF11 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE6AF70227ECC23007ECF11 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FE6AF71227ECC23007ECF11 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -308,6 +312,8 @@
 				CB1331661D7EBCF700B99F04 /* INImageDetailCell.m */,
 				CB78748F1DABA51C00C15411 /* INImageBorderView.h */,
 				CB7874901DABA51C00C15411 /* INImageBorderView.m */,
+				4F2D36D5227FDB6A0014F348 /* INLoadingView.h */,
+				4F2D36D6227FDB6A0014F348 /* INLoadingView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -336,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1331781D7EBD3800B99F04 /* INImagePickerController.h in Headers */,
+				4F2D36D7227FDB6A0014F348 /* INLoadingView.h in Headers */,
 				CB13317C1D7EBD3900B99F04 /* INImageManager.h in Headers */,
 				CB7874911DABA51C00C15411 /* INImageBorderView.h in Headers */,
 				CB7874881DAB9A9D00C15411 /* INImageEditViewController.h in Headers */,
@@ -531,6 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F2D36D8227FDB6A0014F348 /* INLoadingView.m in Sources */,
 				CB13316F1D7EBCF700B99F04 /* INAlbumSelectCell.m in Sources */,
 				CB7874891DAB9A9D00C15411 /* INImageEditViewController.m in Sources */,
 				CB13316E1D7EBCF700B99F04 /* INAlbumCell.m in Sources */,

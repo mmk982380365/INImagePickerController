@@ -15,6 +15,7 @@
 #import "INImageEditViewController.h"
 #import "INAlbum.h"
 #import "INImageAsset.h"
+#import <Photos/Photos.h>
 
 #define margin 3
 
@@ -80,7 +81,8 @@
     BOOL isFind = NO;
     INAlbum *collection = nil;
     for (INAlbum *album in [(INImagePickerController *)self.navigationController manager].albumArray) {
-        if ([album.title isEqualToString:@"相机胶卷"]) {
+        PHAssetCollection *assetCollection = album.collection;
+        if (assetCollection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumUserLibrary) {
             isFind = YES;
             collection = album;
             break;
@@ -147,6 +149,25 @@
 -(void)reloadData{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.albumTableView reloadData];
+        if ([(INImagePickerController *)self.navigationController manager].showedArray.count == 0) {
+            //默认显示相机胶卷  无数据则显示第一个相册
+            BOOL isFind = NO;
+            INAlbum *collection = nil;
+            for (INAlbum *album in [(INImagePickerController *)self.navigationController manager].albumArray) {
+                PHAssetCollection *assetCollection = album.collection;
+                if (assetCollection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumUserLibrary) {
+                    isFind = YES;
+                    collection = album;
+                    break;
+                }
+            }
+            if (isFind == NO && [(INImagePickerController *)self.navigationController manager].albumArray.count > 0) {
+                collection = [(INImagePickerController *)self.navigationController manager].albumArray.firstObject;
+            }
+            //设置标题
+            self.albumTitle.title = collection.title;
+            [self loadAlbums:collection];
+        }
     });
 }
 /**

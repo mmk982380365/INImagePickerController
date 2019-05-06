@@ -277,53 +277,6 @@
     
     PHFetchResult *smartFetch = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:nil];
     
-    for (PHAssetCollection *collection in regularFetch) {
-        
-        if (collection.assetCollectionSubtype == PHAssetCollectionSubtypeAlbumMyPhotoStream) {
-            continue;
-        }
-        
-        INAlbum *album = [[INAlbum alloc] init];
-        album.collection = collection;
-        album.title = collection.localizedTitle;
-        PHFetchResult *rs = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
-        
-        
-        if (rs.count > 0) {
-            if (self.onlyLocations == NO) {
-                [[PHImageManager defaultManager] requestImageForAsset:rs.firstObject targetSize:CGSizeMake(150, 150) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                    album.thumbnail = result;
-                }];
-                album.countOfImage = rs.count;
-                [self.albumArray addObject:album];
-            }else{
-                //显示定位图片
-                
-                //统计数量
-                
-                int countOfLocations = 0;
-                PHAsset *thumb = nil;
-                for (PHAsset *ass in rs) {
-                    if (ass.location) {
-                        countOfLocations++;
-                        thumb = ass;
-                    }
-                }
-                if (countOfLocations > 0) {
-                    [[PHImageManager defaultManager] requestImageForAsset:thumb targetSize:CGSizeMake(150, 150) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                        album.thumbnail = result;
-                    }];
-                    album.countOfImage = countOfLocations;
-                    [self.albumArray addObject:album];
-                }
-                
-            }
-            
-        }
-        
-        
-    }
-    
     for (PHAssetCollection *collection in smartFetch) {
         if (collection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumVideos || collection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumAllHidden) {
             continue;
@@ -343,6 +296,59 @@
                     album.thumbnail = result;
                 }];
                 
+                album.countOfImage = rs.count;
+                if (collection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumUserLibrary) {
+                    [self.albumArray insertObject:album atIndex:0];
+                } else {
+                    [self.albumArray addObject:album];
+                }
+            }else{
+                //显示定位图片
+                
+                //统计数量
+                
+                int countOfLocations = 0;
+                PHAsset *thumb = nil;
+                for (PHAsset *ass in rs) {
+                    if (ass.location) {
+                        countOfLocations++;
+                        thumb = ass;
+                    }
+                }
+                if (countOfLocations > 0) {
+                    [[PHImageManager defaultManager] requestImageForAsset:thumb targetSize:CGSizeMake(150, 150) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                        album.thumbnail = result;
+                    }];
+                    album.countOfImage = countOfLocations;
+                    if (collection.assetCollectionSubtype == PHAssetCollectionSubtypeSmartAlbumUserLibrary) {
+                        [self.albumArray insertObject:album atIndex:0];
+                    } else {
+                        [self.albumArray addObject:album];
+                    }
+                }
+            }
+            
+        }
+        
+    }
+    
+    for (PHAssetCollection *collection in regularFetch) {
+        
+        if (collection.assetCollectionSubtype == PHAssetCollectionSubtypeAlbumMyPhotoStream) {
+            continue;
+        }
+        
+        INAlbum *album = [[INAlbum alloc] init];
+        album.collection = collection;
+        album.title = collection.localizedTitle;
+        PHFetchResult *rs = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
+        
+        
+        if (rs.count > 0) {
+            if (self.onlyLocations == NO) {
+                [[PHImageManager defaultManager] requestImageForAsset:rs.firstObject targetSize:CGSizeMake(150, 150) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                    album.thumbnail = result;
+                }];
                 album.countOfImage = rs.count;
                 [self.albumArray addObject:album];
             }else{
