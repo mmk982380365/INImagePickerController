@@ -100,17 +100,25 @@
         if (PHPhotoLibrary.authorizationStatus == PHAuthorizationStatusNotDetermined) {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
-                    [self loadAlbums];
-                    if (result) {
-                        result();
-                    }
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        [self loadAlbums];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (result) {
+                                result();
+                            }
+                        });
+                    });
                 }
             }];
         }else{
-            [self loadAlbums];
-            if (result) {
-                result();
-            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self loadAlbums];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (result) {
+                        result();
+                    }
+                });
+            });
         }
     }
 #ifndef __IPHONE_8_0
